@@ -1,15 +1,18 @@
-// Ported from app/ui/learn.py, including the two bugs fixed on desktop:
-// (1) the short-answer round resolves the real option text for MC questions
-//     instead of fuzzy-matching against a bare letter, and
-// (2) "(Select TWO/THREE)" questions use real multi-select (checkboxes +
-//     set comparison) instead of forcing a single-letter answer.
+// Ported from app/ui/learn.py. Each question is shown once per pass:
+// multiple_choice (single- or multi-select) is MCQ-only -- correct or
+// wrong, you move straight to the next question. short_answer is a
+// text-entry round, fuzzy-matched against the answer. A wrong answer is
+// requeued behind whatever's left in the session (never as the very next
+// card) so a retry doesn't feel like an immediate repeat; if it was the
+// last card in the queue there's nothing to space it behind, so it isn't
+// re-shown this session at all -- the SRS due date brings it back next time.
 
 const Learn = (() => {
   let state = null;
 
   function freshState() {
     return {
-      queue: [], current: null, phase: "mcq",
+      queue: [], current: null,
       sessionAttempted: 0, sessionCorrect: 0, weakIds: [],
       selectedDomains: null, mode: "due", total: 0,
       isMultiQ: false, selectedLetters: new Set(), optionsRaw: [],
@@ -25,7 +28,7 @@ const Learn = (() => {
       showConfig(container, preset);
     } else if (state.current) {
       // returning mid-session (e.g. tab switch) -- redraw current question
-      state.phase === "mcq" ? showQuestionMcq(container) : showQuestionSa(container);
+      state.current.type === "short_answer" ? showQuestionSa(container) : showQuestionMcq(container);
     } else {
       showConfig(container);
     }
@@ -108,9 +111,7 @@ const Learn = (() => {
       return;
     }
     state.current = state.queue.shift();
-    state.phase = "mcq";
     if (state.current.type === "short_answer") {
-      state.phase = "short_answer";
       showQuestionSa(container);
     } else {
       showQuestionMcq(container);
@@ -198,31 +199,25 @@ const Learn = (() => {
       </div>
     `;
 
-    let nextText, nextFn;
     if (isCorrect) {
       state.sessionCorrect += 1;
       await SRS.updateProgress(q.id, 3);
-      if (state.isMultiQ) {
-        nextText = state.queue.length ? "Next Question →" : "Finish Session";
-        nextFn = () => loadNext(container);
-      } else {
-        nextText = "Continue → Type the Answer";
-        nextFn = () => { state.phase = "short_answer"; showQuestionSa(container); };
-      }
     } else {
       state.weakIds.push(q.id);
       await SRS.updateProgress(q.id, 1);
+      // Requeue to retry later this session -- but only if there's something
+      // left to space it behind (see module comment for why an empty queue
+      // means skipping the retry instead of appending).
       const retryCount = (q._retries || 0) + 1;
-      if (retryCount <= 2) {
+      if (state.queue.length && retryCount <= 2) {
         q._retries = retryCount;
         state.queue.push(q);
       }
-      nextText = "Got it → Next Question";
-      nextFn = () => loadNext(container);
     }
 
+    const nextText = state.queue.length ? "Next Question →" : "Finish Session";
     fb.insertAdjacentHTML("beforeend", `<button class="btn btn-block" id="next-btn">${nextText}</button>`);
-    fb.querySelector("#next-btn").addEventListener("click", nextFn);
+    fb.querySelector("#next-btn").addEventListener("click", () => loadNext(container));
   }
 
   function setsEqual(a, b) {
@@ -233,27 +228,13 @@ const Learn = (() => {
 
   // ===================================================== SHORT ANSWER
 
-  function resolveCorrectText(q) {
-    if (q.type !== "multiple_choice") return q.correct_answer;
-    const letter = q.correct_answer.trim().toUpperCase();
-    const opts = state.optionsRaw.length ? state.optionsRaw : (q.options || []);
-    for (const opt of opts) {
-      if (opt[0]?.toUpperCase() === letter) {
-        return opt.replace(/^[A-Za-z][.)]\s*/, "").trim();
-      }
-    }
-    return q.correct_answer;
-  }
-
   function showQuestionSa(container) {
     const q = state.current;
-    const showHint = state.phase === "short_answer" && q.type === "multiple_choice";
     container.innerHTML = `
       <div class="screen-pad">
         ${progressBar()}
         <div class="card">
           <div class="muted small">${escapeHtml(q.domain || "")}</div>
-          ${showHint ? `<div class="hint-amber">Now type the answer in your own words:</div>` : ""}
           <div class="question-text">${escapeHtml(q.question)}</div>
           <input type="text" id="sa-input" class="text-input" placeholder="Type your answer here…" autocomplete="off">
         </div>
@@ -271,7 +252,7 @@ const Learn = (() => {
     const q = state.current;
     const input = container.querySelector("#sa-input");
     const userText = input.value.trim();
-    const correctText = resolveCorrectText(q);
+    const correctText = q.correct_answer;
     const { isCorrect, ratio, feedback } = Fuzzy.checkAnswer(userText, correctText);
 
     state.sessionAttempted += 1;
@@ -287,7 +268,7 @@ const Learn = (() => {
       quality = ratio >= 0.5 ? 2 : 0;
       if (!state.weakIds.includes(q.id)) state.weakIds.push(q.id);
       const retryCount = (q._saRetries || 0) + 1;
-      if (retryCount <= 1) {
+      if (state.queue.length && retryCount <= 1) {
         q._saRetries = retryCount;
         state.queue.push(q);
       }

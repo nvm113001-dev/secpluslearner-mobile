@@ -1,4 +1,4 @@
-const CACHE_VERSION = "secplus-v1";
+const CACHE_VERSION = "secplus-v2";
 const ASSETS = [
   "./",
   "./index.html",
