@@ -1256,7 +1256,7 @@
 "domain": "3.0 Security Architecture",
 "subtopic": "3.3",
 "type": "multiple_choice",
-"question": "A company's security policy requires that login access should only be available if a person is physically withi the same building as the server. Which of the following would be the BEST way to provide this requirement?",
+"question": "A company's security policy requires that login access should only be available if a person is physically within the same building as the server. Which of the following would be the BEST way to provide this requirement?",
 "options": [
 "A. USB security key",
 "B. Biometric scanner",
@@ -2671,7 +2671,7 @@
 "options": [
 "A. The customer will connect to remote sites over an IPsec tunnel",
 "B. The service provider will provide 99.99% uptime",
-"C. The customer applications use HTTPS over tcep/443",
+"C. The customer applications use HTTPS over tcp/443",
 "D. Customer application use will be busiest on the 15th of each month"
 ],
 "correct_answer": "B",
