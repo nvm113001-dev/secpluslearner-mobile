@@ -5,6 +5,12 @@
 const DB_NAME = "secpluslearner";
 const DB_VERSION = 2;
 const QUESTIONS_JSON_URL = "./questions.json";
+// Bump this whenever questions.json's *content* changes (not just the app
+// code) so existing installs re-seed the questions store instead of
+// silently keeping whatever they first downloaded. Re-seeding overwrites
+// question text by id via put() -- it never touches progress/mastery data,
+// which lives in separate object stores keyed the same way.
+const QUESTIONS_CONTENT_VERSION = 2;
 
 let _db = null;
 
@@ -60,9 +66,14 @@ function reqToPromise(req) {
 
 async function init() {
   _db = await openDB();
-  const metaTx = tx(["meta"]);
-  const seeded = await reqToPromise(metaTx.objectStore("meta").get("seeded"));
-  if (!seeded) {
+  // Separate transactions per read -- an IndexedDB transaction can
+  // auto-commit as soon as the event loop turns over between awaited
+  // requests, so reusing one across two sequential awaits risks a
+  // TransactionInactiveError on the second .get().
+  const seeded = await reqToPromise(tx(["meta"]).objectStore("meta").get("seeded"));
+  const versionRow = await reqToPromise(tx(["meta"]).objectStore("meta").get("questions_version"));
+  const currentVersion = versionRow ? versionRow.value : 0;
+  if (!seeded || currentVersion !== QUESTIONS_CONTENT_VERSION) {
     await seedQuestions();
   }
 }
@@ -76,6 +87,7 @@ async function seedQuestions() {
     qStore.put(q);
   }
   t.objectStore("meta").put({ key: "seeded", value: true, count: questions.length });
+  t.objectStore("meta").put({ key: "questions_version", value: QUESTIONS_CONTENT_VERSION });
   await new Promise((resolve, reject) => {
     t.oncomplete = resolve;
     t.onerror = () => reject(t.error);
