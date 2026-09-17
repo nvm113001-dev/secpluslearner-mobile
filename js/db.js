@@ -3,7 +3,7 @@
 // ported from app/srs.py and app/fuzzy.py needed no behavioral changes.
 
 const DB_NAME = "secpluslearner";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const QUESTIONS_JSON_URL = "./questions.json";
 
 let _db = null;
@@ -27,6 +27,19 @@ function openDB() {
       }
       if (!db.objectStoreNames.contains("meta")) {
         db.createObjectStore("meta", { keyPath: "key" });
+      }
+      // Master-mode learning periods: each period is a campaign covering a
+      // (possibly domain-filtered) scope of the question set. It stays
+      // "active" (completed_at === null) until every question in scope has
+      // reached mastery status 2 -- see mastery.js for the state machine.
+      if (!db.objectStoreNames.contains("periods")) {
+        db.createObjectStore("periods", { keyPath: "id", autoIncrement: true });
+      }
+      // One row per (period, question): status 0 = not started / needs its
+      // first pass, 1 = first pass done (needs the typed retry), 2 = mastered.
+      if (!db.objectStoreNames.contains("mastery")) {
+        const ms = db.createObjectStore("mastery", { keyPath: ["period_id", "question_id"] });
+        ms.createIndex("period_id", "period_id");
       }
     };
     req.onsuccess = (e) => resolve(e.target.result);
@@ -154,6 +167,50 @@ async function getRecentSessions(limit = 10) {
   return all.sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, limit);
 }
 
+// ---------------------------------------------------------------- periods / mastery (Learn "Master Mode")
+
+async function addPeriod(period) {
+  const t = tx(["periods"], "readwrite");
+  const id = await reqToPromise(t.objectStore("periods").add(period));
+  await new Promise((resolve, reject) => { t.oncomplete = resolve; t.onerror = () => reject(t.error); });
+  return id;
+}
+
+async function putPeriod(period) {
+  const t = tx(["periods"], "readwrite");
+  t.objectStore("periods").put(period);
+  await new Promise((resolve, reject) => { t.oncomplete = resolve; t.onerror = () => reject(t.error); });
+}
+
+async function getPeriod(id) {
+  const t = tx(["periods"]);
+  return reqToPromise(t.objectStore("periods").get(id));
+}
+
+async function getLatestPeriod() {
+  const t = tx(["periods"]);
+  const all = await reqToPromise(t.objectStore("periods").getAll());
+  if (!all.length) return null;
+  return all.reduce((a, b) => (b.id > a.id ? b : a));
+}
+
+async function putMasteryRows(rows) {
+  const t = tx(["mastery"], "readwrite");
+  const store = t.objectStore("mastery");
+  for (const r of rows) store.put(r);
+  await new Promise((resolve, reject) => { t.oncomplete = resolve; t.onerror = () => reject(t.error); });
+}
+
+async function getMasteryRow(periodId, questionId) {
+  const t = tx(["mastery"]);
+  return reqToPromise(t.objectStore("mastery").get([periodId, questionId]));
+}
+
+async function getMasteryRowsByPeriod(periodId) {
+  const t = tx(["mastery"]);
+  return reqToPromise(t.objectStore("mastery").index("period_id").getAll(periodId));
+}
+
 // ---------------------------------------------------------------- helpers
 
 function todayISO() {
@@ -164,4 +221,6 @@ window.DB = {
   init, getAllQuestions, getQuestion, getQuestionsByIds, putQuestion, deleteQuestion,
   getAllDomains, getAllSources, getProgress, getAllProgress, putProgress,
   addSession, getRecentSessions, todayISO,
+  addPeriod, putPeriod, getPeriod, getLatestPeriod,
+  putMasteryRows, getMasteryRow, getMasteryRowsByPeriod,
 };

@@ -1,68 +1,69 @@
-// Ported from app/ui/learn.py. Each question is shown once per pass:
-// multiple_choice (single- or multi-select) is MCQ-only -- correct or
-// wrong, you move straight to the next question. short_answer is a
-// text-entry round, fuzzy-matched against the answer. A wrong answer is
-// requeued behind whatever's left in the session (never as the very next
-// card) so a retry doesn't feel like an immediate repeat; if it was the
-// last card in the queue there's nothing to space it behind, so it isn't
-// re-shown this session at all -- the SRS due date brings it back next time.
+// Learn tab -- "Master Mode". A period is a persistent campaign over the
+// full question set (or a domain-filtered subset): every question needs two
+// correct passes to be mastered for that period -- first via multiple choice
+// (or typed, for the handful of questions with no options), then a second
+// time later in the period, typed from memory with no options shown. A wrong
+// typed retry regresses the question back to needing its first pass again.
+// See mastery.js for the actual state machine; this file is UI only.
+//
+// A period is chunked into rounds of a size you set on the period-home
+// screen. Each round pulls a random batch of whatever's currently eligible
+// (not-yet-started questions needing their first pass, first-pass-done
+// questions needing the typed retry) -- so a question's retry shows up in
+// some later round, not deterministically N questions later.
+//
+// SRS.updateProgress keeps running in parallel on every answer here (same
+// as it always has), feeding the Dashboard's separate long-term stats --
+// that bookkeeping is untouched by any of this.
 
 const Learn = (() => {
   let state = null;
 
   function freshState() {
     return {
-      queue: [], current: null,
-      sessionAttempted: 0, sessionCorrect: 0, weakIds: [],
-      selectedDomains: null, mode: "due", total: 0,
-      isMultiQ: false, selectedLetters: new Set(), optionsRaw: [],
+      period: null, queue: [], current: null,
+      roundTotal: 0, roundAttempted: 0, roundCorrect: 0, roundNewlyMastered: 0,
+      periodJustCompleted: false,
+      isMultiQ: false, optionsRaw: [],
+      pendingResult: null,
     };
   }
 
   async function render(container) {
     if (!state) state = freshState();
-    const preset = Router.consumeLearnStartMode();
-    if (preset) {
-      state = freshState();
-      state.mode = preset;
-      showConfig(container, preset);
-    } else if (state.current) {
-      // returning mid-session (e.g. tab switch) -- redraw current question
-      state.current.type === "short_answer" ? showQuestionSa(container) : showQuestionMcq(container);
+    if (state.current) {
+      // returning mid-question (e.g. tab switch) -- redraw current card
+      state.current.passType === "mc" ? showQuestionMc(container) : showQuestionTyped(container);
+      return;
+    }
+    const active = await Mastery.getActivePeriod();
+    if (active) {
+      state.period = active;
+      showPeriodHome(container);
     } else {
       showConfig(container);
     }
   }
 
-  // ===================================================== CONFIG
+  // ===================================================== HELPERS
 
-  async function showConfig(container, presetMode) {
-    const domains = await SRS.getAllDomains();
-    const mode = presetMode || state.mode || "due";
-    container.innerHTML = `
-      <div class="screen-pad">
-        <h1 class="screen-title">Learn Mode</h1>
-        <p class="screen-sub">Configure your study session</p>
-        <div class="panel">
-          <h3 class="field-label">Question pool</h3>
-          <div class="radio-group" id="mode-group">
-            ${radioRow("mode", "due", "Due today (SRS)", mode === "due")}
-            ${radioRow("mode", "all", "All questions", mode === "all")}
-            ${radioRow("mode", "weak", "Weak / Struggling", mode === "weak")}
-          </div>
-          <h3 class="field-label">Domain filter (blank = all)</h3>
-          <div class="checkbox-grid" id="domain-checks">
-            ${domains.map((d) => checkRow("domain", d, d)).join("")}
-          </div>
-          <h3 class="field-label">Questions per session</h3>
-          <select id="count-select" class="select">
-            ${[5, 10, 15, 20, 30, 50].map((n) => `<option value="${n}" ${n === 20 ? "selected" : ""}>${n}</option>`).join("")}
-          </select>
-        </div>
-        <button class="btn btn-block btn-primary" id="start-btn">Start Session</button>
-      </div>
-    `;
-    container.querySelector("#start-btn").addEventListener("click", () => startSession(container));
+  function escapeAttr(s) { return s.replace(/"/g, "&quot;"); }
+  function escapeHtml(s) {
+    return (s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+  function optionLetter(opt) { return opt[0]?.toUpperCase() || ""; }
+
+  // For the typed retry (and for the 8 no-option questions' first typed
+  // pass), the expected answer is the correct option's own text -- not its
+  // letter, which means nothing once the options are hidden. Multi-select
+  // questions ("A,E,G") join all correct option texts together.
+  function typedAnswerText(q) {
+    if (!q.options || !q.options.length) return q.correct_answer;
+    const letters = q.correct_answer.trim().toUpperCase().split(",");
+    return q.options
+      .filter((opt) => letters.includes(optionLetter(opt)))
+      .map((opt) => opt.slice(opt.indexOf(".") + 1).trim())
+      .join(", ");
   }
 
   function radioRow(name, value, label, checked) {
@@ -71,35 +72,104 @@ const Learn = (() => {
   function checkRow(name, value, label) {
     return `<label class="check-row"><input type="checkbox" name="${name}" value="${escapeAttr(value)}"><span>${label}</span></label>`;
   }
-  function escapeAttr(s) { return s.replace(/"/g, "&quot;"); }
-  function escapeHtml(s) {
-    return (s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  function masteryBar(progress) {
+    const { total, mastered, pass1Done, notStarted } = progress;
+    const pct = (n) => (total > 0 ? (n / total) * 100 : 0);
+    return `
+      <div class="mastery-bar">
+        <div class="mastery-seg mastery-seg-mastered" style="width:${pct(mastered)}%"></div>
+        <div class="mastery-seg mastery-seg-pass1" style="width:${pct(pass1Done)}%"></div>
+      </div>
+      <div class="mastery-stats-row">
+        <span class="mastery-stat"><span class="dot dot-mastered"></span>${mastered} mastered</span>
+        <span class="mastery-stat"><span class="dot dot-pass1"></span>${pass1Done} awaiting typed retry</span>
+        <span class="mastery-stat"><span class="dot dot-notstarted"></span>${notStarted} not started</span>
+      </div>
+    `;
   }
 
-  async function startSession(container) {
-    state.mode = container.querySelector('input[name="mode"]:checked').value;
+  // ===================================================== CONFIG (new period)
+
+  async function showConfig(container) {
+    const domains = await SRS.getAllDomains();
+    container.innerHTML = `
+      <div class="screen-pad">
+        <h1 class="screen-title">Learn Mode</h1>
+        <p class="screen-sub">Master Mode: two correct passes -- multiple choice, then typed from memory -- masters a question for this period.</p>
+        <div class="panel">
+          <h3 class="field-label">Domain filter (blank = all)</h3>
+          <div class="checkbox-grid" id="domain-checks">
+            ${domains.map((d) => checkRow("domain", d, d)).join("")}
+          </div>
+          <h3 class="field-label">Questions per round</h3>
+          <input type="number" id="round-size-input" class="text-input" min="1" max="200" value="20">
+        </div>
+        <button class="btn btn-block btn-primary" id="start-btn">Begin Period</button>
+      </div>
+    `;
+    container.querySelector("#start-btn").addEventListener("click", () => beginPeriod(container));
+  }
+
+  async function beginPeriod(container) {
     const domainChecks = [...container.querySelectorAll('input[name="domain"]:checked')].map((el) => el.value);
-    state.selectedDomains = domainChecks.length ? domainChecks : null;
-    const limit = parseInt(container.querySelector("#count-select").value, 10);
+    const roundSize = Math.max(1, parseInt(container.querySelector("#round-size-input").value, 10) || 20);
 
-    const questions = await SRS.getDueQuestions({ domains: state.selectedDomains, mode: state.mode, limit });
-
-    if (!questions.length) {
+    const period = await Mastery.startPeriod({ domains: domainChecks.length ? domainChecks : null, roundSize });
+    if (!period.total) {
       container.innerHTML = `
         <div class="screen-pad center-pad">
           <h2>No questions found</h2>
-          <p class="muted">Try changing the domain filter or question pool.</p>
-          <button class="btn" id="back-btn">Back to Config</button>
+          <p class="muted">Try changing the domain filter.</p>
+          <button class="btn" id="back-btn">Back</button>
         </div>`;
       container.querySelector("#back-btn").addEventListener("click", () => showConfig(container));
       return;
     }
 
-    state.queue = questions;
-    state.sessionAttempted = 0;
-    state.sessionCorrect = 0;
-    state.weakIds = [];
-    state.total = state.queue.length;
+    state.period = period;
+    showPeriodHome(container);
+  }
+
+  // ===================================================== PERIOD HOME
+
+  async function showPeriodHome(container) {
+    const progress = await Mastery.getPeriodProgress(state.period.id);
+    const remaining = progress.total - progress.mastered;
+    container.innerHTML = `
+      <div class="screen-pad">
+        <h1 class="screen-title">Learn Mode</h1>
+        <p class="screen-sub">${state.period.domains ? state.period.domains.join(", ") : "All domains"} &middot; ${progress.total} questions this period</p>
+        <div class="panel">
+          ${masteryBar(progress)}
+        </div>
+        <div class="panel">
+          <h3 class="field-label">Questions per round</h3>
+          <input type="number" id="round-size-input" class="text-input" min="1" max="${Math.max(1, remaining)}" value="${state.period.round_size || 20}">
+        </div>
+        <button class="btn btn-block btn-primary" id="round-btn">Start Round</button>
+      </div>
+    `;
+    container.querySelector("#round-btn").addEventListener("click", () => startRound(container));
+  }
+
+  async function startRound(container) {
+    const roundSize = Math.max(1, parseInt(container.querySelector("#round-size-input").value, 10) || 20);
+    state.period.round_size = roundSize;
+    await DB.putPeriod(state.period);
+
+    const batch = await Mastery.getRoundBatch(state.period.id, roundSize);
+    if (!batch.length) {
+      showPeriodHome(container);
+      return;
+    }
+
+    state.queue = batch;
+    state.roundTotal = batch.length;
+    state.roundAttempted = 0;
+    state.roundCorrect = 0;
+    state.roundNewlyMastered = 0;
+    state.periodJustCompleted = false;
     loadNext(container);
   }
 
@@ -107,30 +177,43 @@ const Learn = (() => {
 
   function loadNext(container) {
     if (!state.queue.length) {
-      showSummary(container);
+      showRoundSummary(container);
       return;
     }
     state.current = state.queue.shift();
-    if (state.current.type === "short_answer") {
-      showQuestionSa(container);
-    } else {
-      showQuestionMcq(container);
-    }
+    state.current.passType === "mc" ? showQuestionMc(container) : showQuestionTyped(container);
   }
 
-  // ===================================================== MCQ
+  function progressBar() {
+    const done = state.roundTotal - state.queue.length;
+    const pct = state.roundTotal > 0 ? (done / state.roundTotal) * 100 : 0;
+    return `
+      <div class="progress-top">
+        <span>Question ${done} of ${state.roundTotal}</span>
+        <span class="muted">Correct: ${state.roundCorrect}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    `;
+  }
 
-  function showQuestionMcq(container) {
-    const q = state.current;
+  function passBadge(passType) {
+    return passType === "mc"
+      ? `<span class="pass-badge pass-badge-mc">Multiple Choice</span>`
+      : `<span class="pass-badge pass-badge-typed">Typed Recall</span>`;
+  }
+
+  // ===================================================== MC PASS
+
+  function showQuestionMc(container) {
+    const { question: q } = state.current;
     state.isMultiQ = q.correct_answer.includes(",");
-    state.selectedLetters = new Set();
     state.optionsRaw = q.options || [];
 
     container.innerHTML = `
       <div class="screen-pad">
         ${progressBar()}
         <div class="card">
-          <div class="muted small">${escapeHtml(q.domain || "")}</div>
+          <div class="muted small">${escapeHtml(q.domain || "")} ${passBadge("mc")}</div>
           <div class="question-text">${escapeHtml(q.question)}</div>
           ${state.isMultiQ ? `<div class="hint-amber">Select all that apply, then submit.</div>` : ""}
           <div id="option-list" class="option-list">
@@ -144,7 +227,7 @@ const Learn = (() => {
 
     const inputs = container.querySelectorAll("#option-list input");
     inputs.forEach((inp) => inp.addEventListener("change", () => updateSubmitState(container)));
-    container.querySelector("#submit-btn").addEventListener("click", () => submitMcq(container));
+    container.querySelector("#submit-btn").addEventListener("click", () => submitMc(container));
   }
 
   function optionRow(opt, i, isMulti) {
@@ -162,17 +245,16 @@ const Learn = (() => {
   }
 
   function updateSubmitState(container) {
-    const btn = container.querySelector("#submit-btn");
-    btn.disabled = selectedLetters(container).length === 0;
+    container.querySelector("#submit-btn").disabled = selectedLetters(container).length === 0;
   }
 
-  async function submitMcq(container) {
-    const q = state.current;
+  async function submitMc(container) {
+    const { question: q } = state.current;
     const selected = new Set(selectedLetters(container));
     const correctSet = new Set(q.correct_answer.trim().toUpperCase().split(","));
     const isCorrect = setsEqual(selected, correctSet);
 
-    state.sessionAttempted += 1;
+    state.roundAttempted += 1;
 
     container.querySelectorAll("#option-list input").forEach((el) => (el.disabled = true));
     container.querySelector("#submit-btn").disabled = true;
@@ -183,7 +265,6 @@ const Learn = (() => {
       else if (selected.has(letter) && !isCorrect) row.classList.add("option-wrong");
     });
 
-    const fb = container.querySelector("#feedback");
     let fbLabel = "";
     if (!isCorrect) {
       const label = correctSet.size > 1 ? "answers" : "answer";
@@ -191,32 +272,22 @@ const Learn = (() => {
       fbLabel = `The correct ${label} ${verb}: ${[...correctSet].sort().join(", ")}`;
     }
 
+    await SRS.updateProgress(q.id, isCorrect ? 3 : 1);
+    const result = await Mastery.recordAttempt(state.period.id, q.id, isCorrect);
+
+    if (isCorrect) state.roundCorrect += 1;
+    if (result.periodCompleted) state.periodJustCompleted = true;
+
+    const fb = container.querySelector("#feedback");
     fb.innerHTML = `
       <div class="feedback-card ${isCorrect ? "feedback-correct" : "feedback-wrong"}">
         <div class="feedback-title">${isCorrect ? "CORRECT" : "INCORRECT"}</div>
         ${fbLabel ? `<div class="feedback-sub">${escapeHtml(fbLabel)}</div>` : ""}
+        ${!isCorrect ? `<div class="feedback-sub">This question stays in the pool -- it'll come back around for another multiple-choice attempt.</div>` : `<div class="feedback-sub">First pass done -- it'll come back later, typed from memory, to finish mastering it.</div>`}
         ${q.explanation ? `<div class="feedback-explanation">${escapeHtml(q.explanation)}</div>` : ""}
       </div>
+      <button class="btn btn-block" id="next-btn">${state.queue.length ? "Next Question →" : "Finish Round"}</button>
     `;
-
-    if (isCorrect) {
-      state.sessionCorrect += 1;
-      await SRS.updateProgress(q.id, 3);
-    } else {
-      state.weakIds.push(q.id);
-      await SRS.updateProgress(q.id, 1);
-      // Requeue to retry later this session -- but only if there's something
-      // left to space it behind (see module comment for why an empty queue
-      // means skipping the retry instead of appending).
-      const retryCount = (q._retries || 0) + 1;
-      if (state.queue.length && retryCount <= 2) {
-        q._retries = retryCount;
-        state.queue.push(q);
-      }
-    }
-
-    const nextText = state.queue.length ? "Next Question →" : "Finish Session";
-    fb.insertAdjacentHTML("beforeend", `<button class="btn btn-block" id="next-btn">${nextText}</button>`);
     fb.querySelector("#next-btn").addEventListener("click", () => loadNext(container));
   }
 
@@ -226,118 +297,141 @@ const Learn = (() => {
     return true;
   }
 
-  // ===================================================== SHORT ANSWER
+  // ===================================================== TYPED PASS
 
-  function showQuestionSa(container) {
-    const q = state.current;
+  function showQuestionTyped(container) {
+    const { question: q } = state.current;
     container.innerHTML = `
       <div class="screen-pad">
         ${progressBar()}
         <div class="card">
-          <div class="muted small">${escapeHtml(q.domain || "")}</div>
+          <div class="muted small">${escapeHtml(q.domain || "")} ${passBadge("typed")}</div>
           <div class="question-text">${escapeHtml(q.question)}</div>
-          <input type="text" id="sa-input" class="text-input" placeholder="Type your answer here…" autocomplete="off">
+          <input type="text" id="ty-input" class="text-input" placeholder="Type your answer here…" autocomplete="off">
         </div>
-        <button class="btn btn-block btn-primary" id="sa-submit">Submit Answer</button>
+        <button class="btn btn-block btn-primary" id="ty-submit">Submit Answer</button>
         <div id="feedback"></div>
       </div>
     `;
-    const input = container.querySelector("#sa-input");
+    const input = container.querySelector("#ty-input");
     input.focus();
-    input.addEventListener("keydown", (e) => { if (e.key === "Enter") submitSa(container); });
-    container.querySelector("#sa-submit").addEventListener("click", () => submitSa(container));
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") submitTyped(container); });
+    container.querySelector("#ty-submit").addEventListener("click", () => submitTyped(container));
   }
 
-  async function submitSa(container) {
-    const q = state.current;
-    const input = container.querySelector("#sa-input");
+  async function submitTyped(container) {
+    const { question: q } = state.current;
+    const input = container.querySelector("#ty-input");
     const userText = input.value.trim();
-    const correctText = q.correct_answer;
+    const correctText = typedAnswerText(q);
     const { isCorrect, ratio, feedback } = Fuzzy.checkAnswer(userText, correctText);
 
-    state.sessionAttempted += 1;
+    state.roundAttempted += 1;
     input.disabled = true;
-    container.querySelector("#sa-submit").disabled = true;
+    container.querySelector("#ty-submit").disabled = true;
 
-    let quality, fbClass, fbTitle;
-    if (isCorrect) {
-      state.sessionCorrect += 1;
-      quality = ratio >= 0.9 ? 5 : 4;
-      fbClass = "feedback-correct"; fbTitle = "CORRECT";
-    } else {
-      quality = ratio >= 0.5 ? 2 : 0;
-      if (!state.weakIds.includes(q.id)) state.weakIds.push(q.id);
-      const retryCount = (q._saRetries || 0) + 1;
-      if (state.queue.length && retryCount <= 1) {
-        q._saRetries = retryCount;
-        state.queue.push(q);
-      }
-      fbClass = ratio < 0.5 ? "feedback-wrong" : "feedback-almost";
-      fbTitle = ratio < 0.5 ? "INCORRECT" : "ALMOST";
-    }
-    await SRS.updateProgress(q.id, quality);
+    const quality = isCorrect ? (ratio >= 0.9 ? 5 : 4) : (ratio >= 0.5 ? 2 : 0);
+    state.pendingResult = { isCorrect, ratio, feedback, quality, correctText, overridden: false };
+
+    renderTypedFeedback(container);
+  }
+
+  function renderTypedFeedback(container) {
+    const { question: q } = state.current;
+    const r = state.pendingResult;
+    const fbClass = r.isCorrect ? "feedback-correct" : (r.ratio >= 0.5 ? "feedback-almost" : "feedback-wrong");
+    const fbTitle = r.overridden ? "MARKED CORRECT" : (r.isCorrect ? "CORRECT" : (r.ratio >= 0.5 ? "ALMOST" : "INCORRECT"));
 
     const fb = container.querySelector("#feedback");
     fb.innerHTML = `
       <div class="feedback-card ${fbClass}">
         <div class="feedback-title">${fbTitle}</div>
-        <div class="feedback-sub">${escapeHtml(feedback)}</div>
-        ${!isCorrect ? `<div class="feedback-answer">Answer: ${escapeHtml(correctText)}</div>` : ""}
+        <div class="feedback-sub">${escapeHtml(r.overridden ? "Self-graded correct." : r.feedback)}</div>
+        ${!r.isCorrect ? `<div class="feedback-answer">Answer: ${escapeHtml(r.correctText)}</div>` : ""}
         ${q.explanation ? `<div class="feedback-explanation">${escapeHtml(q.explanation)}</div>` : ""}
       </div>
-      <button class="btn btn-block" id="next-btn">${state.queue.length ? "Next Question →" : "Finish Session"}</button>
+      <div id="ty-actions"></div>
     `;
-    fb.querySelector("#next-btn").addEventListener("click", () => loadNext(container));
+
+    const actions = fb.querySelector("#ty-actions");
+    if (!r.isCorrect) {
+      actions.insertAdjacentHTML("beforeend", `<button class="btn btn-block btn-outline" id="override-btn">I got this right → mark correct</button>`);
+      actions.querySelector("#override-btn").addEventListener("click", () => {
+        state.pendingResult.isCorrect = true;
+        state.pendingResult.overridden = true;
+        state.pendingResult.quality = 4;
+        renderTypedFeedback(container);
+      });
+    }
+    actions.insertAdjacentHTML("beforeend", `<button class="btn btn-block" id="next-btn">${state.queue.length ? "Next Question →" : "Finish Round"}</button>`);
+    actions.querySelector("#next-btn").addEventListener("click", () => finalizeTyped(container));
   }
 
-  // ===================================================== PROGRESS / SUMMARY
+  async function finalizeTyped(container) {
+    const { question: q } = state.current;
+    const r = state.pendingResult;
 
-  function progressBar() {
-    const done = state.total - state.queue.length;
-    const pct = state.total > 0 ? (done / state.total) * 100 : 0;
-    return `
-      <div class="progress-top">
-        <span>Question ${done} of ${state.total}</span>
-        <span class="muted">Correct: ${state.sessionCorrect}</span>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-    `;
+    await SRS.updateProgress(q.id, r.quality);
+    const result = await Mastery.recordAttempt(state.period.id, q.id, r.isCorrect);
+
+    if (r.isCorrect) state.roundCorrect += 1;
+    if (result.status === 2) state.roundNewlyMastered += 1;
+    if (result.periodCompleted) state.periodJustCompleted = true;
+
+    state.pendingResult = null;
+    loadNext(container);
   }
 
-  async function showSummary(container) {
+  // ===================================================== ROUND SUMMARY
+
+  async function showRoundSummary(container) {
     await SRS.saveSession({
-      mode: "learn", domains: state.selectedDomains,
-      attempted: state.sessionAttempted, correct: state.sessionCorrect, weakIds: state.weakIds,
+      mode: "learn", domains: state.period.domains,
+      attempted: state.roundAttempted, correct: state.roundCorrect, weakIds: [],
     });
 
-    const pct = state.sessionAttempted ? Math.round((state.sessionCorrect / state.sessionAttempted) * 100) : 0;
+    if (state.periodJustCompleted) {
+      showPeriodComplete(container);
+      return;
+    }
+
+    const progress = await Mastery.getPeriodProgress(state.period.id);
+    const pct = state.roundAttempted ? Math.round((state.roundCorrect / state.roundAttempted) * 100) : 0;
     const colorClass = pct >= 75 ? "text-green" : pct >= 50 ? "text-amber" : "text-red";
 
     container.innerHTML = `
       <div class="screen-pad center-pad">
-        <h1>Session Complete!</h1>
-        <p class="${colorClass} big">${state.sessionCorrect} / ${state.sessionAttempted} correct (${pct}%)</p>
-        ${state.weakIds.length ? `<p class="muted">${state.weakIds.length} question(s) need more review</p>` : ""}
+        <h1>Round Complete!</h1>
+        <p class="${colorClass} big">${state.roundCorrect} / ${state.roundAttempted} correct (${pct}%)</p>
+        ${state.roundNewlyMastered ? `<p class="muted">${state.roundNewlyMastered} question(s) newly mastered this round</p>` : ""}
+        <div class="panel" style="text-align:left; width:100%; max-width:400px;">${masteryBar(progress)}</div>
         <div class="btn-row">
-          <button class="btn" id="again-btn">Study Again</button>
-          ${state.weakIds.length ? `<button class="btn btn-red" id="weak-btn">Review Weak</button>` : ""}
+          <button class="btn btn-primary" id="continue-btn">Continue Period</button>
           <button class="btn btn-ghost" id="dash-btn">Dashboard</button>
         </div>
       </div>
     `;
-    container.querySelector("#again-btn").addEventListener("click", () => { state = freshState(); showConfig(container); });
-    container.querySelector("#dash-btn").addEventListener("click", () => { state = freshState(); Router.show("dashboard"); });
-    const weakBtn = container.querySelector("#weak-btn");
-    if (weakBtn) weakBtn.addEventListener("click", () => retakeWeak(container));
+    state.current = null;
+    container.querySelector("#continue-btn").addEventListener("click", () => showPeriodHome(container));
+    container.querySelector("#dash-btn").addEventListener("click", () => { Router.show("dashboard"); });
   }
 
-  async function retakeWeak(container) {
-    const weakQuestions = await SRS.getQuestionsByIds(state.weakIds);
+  async function showPeriodComplete(container) {
+    const progress = await Mastery.getPeriodProgress(state.period.id);
+    container.innerHTML = `
+      <div class="screen-pad center-pad">
+        <h1>Period Complete! 🎉</h1>
+        <p class="big text-green">${progress.mastered} / ${progress.total} questions mastered</p>
+        <p class="muted">Every question in this period has been answered correctly via multiple choice and then again from memory. Start a new period to go through the set again.</p>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="new-period-btn">Start New Period</button>
+          <button class="btn btn-ghost" id="dash-btn">Dashboard</button>
+        </div>
+      </div>
+    `;
     state = freshState();
-    state.queue = weakQuestions;
-    state.total = state.queue.length;
-    if (state.queue.length) loadNext(container);
-    else showConfig(container);
+    container.querySelector("#new-period-btn").addEventListener("click", () => showConfig(container));
+    container.querySelector("#dash-btn").addEventListener("click", () => { Router.show("dashboard"); });
   }
 
   return { render };

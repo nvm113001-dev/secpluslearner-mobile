@@ -7,16 +7,6 @@ const SCREENS = {
 };
 
 let _current = null;
-let _pendingLearnMode = null; // set by Dashboard "Quick Start" buttons
-
-function setLearnStartMode(mode) {
-  _pendingLearnMode = mode;
-}
-function consumeLearnStartMode() {
-  const m = _pendingLearnMode;
-  _pendingLearnMode = null;
-  return m;
-}
 
 async function show(name) {
   _current = name;
@@ -41,4 +31,4 @@ function buildTabBar() {
   }
 }
 
-window.Router = { show, buildTabBar, setLearnStartMode, consumeLearnStartMode, get current() { return _current; } };
+window.Router = { show, buildTabBar, get current() { return _current; } };

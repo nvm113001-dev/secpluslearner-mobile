@@ -9,9 +9,7 @@ const Dashboard = (() => {
 
         <div class="panel">
           <h2 class="panel-title">Quick Start</h2>
-          <button class="btn btn-block" id="qs-due">Learn (Due Questions)</button>
-          <button class="btn btn-block btn-amber" id="qs-weak">Review Weak Areas</button>
-          <button class="btn btn-block btn-ghost" id="qs-all">Learn All Questions</button>
+          <button class="btn btn-block" id="qs-learn">Learn</button>
           <button class="btn btn-block btn-red" id="qs-test">Practice Test</button>
         </div>
 
@@ -27,19 +25,12 @@ const Dashboard = (() => {
       </div>
     `;
 
-    container.querySelector("#qs-due").addEventListener("click", () => goLearn("due"));
-    container.querySelector("#qs-weak").addEventListener("click", () => goLearn("weak"));
-    container.querySelector("#qs-all").addEventListener("click", () => goLearn("all"));
+    container.querySelector("#qs-learn").addEventListener("click", () => Router.show("learn"));
     container.querySelector("#qs-test").addEventListener("click", () => Router.show("test"));
 
     await loadStats(container);
     await loadDomains(container);
     await loadSessions(container);
-  }
-
-  function goLearn(mode) {
-    Router.setLearnStartMode(mode);
-    Router.show("learn");
   }
 
   async function loadStats(container) {

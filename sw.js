@@ -1,4 +1,4 @@
-const CACHE_VERSION = "secplus-v2";
+const CACHE_VERSION = "secplus-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -8,6 +8,7 @@ const ASSETS = [
   "./js/db.js",
   "./js/srs.js",
   "./js/fuzzy.js",
+  "./js/mastery.js",
   "./js/router.js",
   "./js/dashboard.js",
   "./js/learn.js",

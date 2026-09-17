@@ -182,7 +182,7 @@
 "question": "Attacker accesses a database directly from a web browser",
 "options": null,
 "correct_answer": "Injection",
-"explanation": "Attacker accesses a database directly f+ from a web browser [com Injection A SQL (Structured Query Language) injection attack sends SQL commands directly to a database using a vulnerable web application. tse] More information: ete: §= SY(-701, Objective 2.3 - SQL Injection [a] ' https://professormesser.link/701020306",
+"explanation": "Attacker accesses a database directly f+ from a web browser [com Injection A SQL (Structured Query Language) injection attack sends SQL commands directly to a database using a vulnerable web application. More information: SY0-701, Objective 2.3 - SQL Injection — https://professormesser.link/701020306",
 "tags": [
 "denial_of_service",
 "on_path_attacks",
@@ -199,7 +199,7 @@
 "question": "Multiple attackers overwhelm a web server at the same time.",
 "options": null,
 "correct_answer": "DDoS",
-"explanation": "Multiple attackers overwhelm a web server DDoS A DoS (Denial of Service) occurs when a service is unavailable due to the actions of a third-party. A DDoS (Distributed Denial of Service) occurs when multiple third-parties work together to create a service outage. f)xs[=] More information: pa tf",
+"explanation": "Multiple attackers overwhelm a web server DDoS A DoS (Denial of Service) occurs when a service is unavailable due to the actions of a third-party. A DDoS (Distributed Denial of Service) occurs when multiple third-parties work together to create a service outage.",
 "tags": [
 "denial_of_service",
 "on_path_attacks",
@@ -216,7 +216,7 @@
 "question": "Attacker obtains a list of all login credentials used over the last 24 hours.",
 "options": null,
 "correct_answer": "Keylogger",
-"explanation": "Attacker obtains a list of all login credentials used over the last 24 hours Keylogger Attackers can install hardware or software keyloggers to capture all information typed into a keyboard. Keylogger software can also capture screenshots and other media and covertly send all of this information to the attacker using an existing Internet connection. \"2[8] More information: §=",
+"explanation": "Attacker obtains a list of all login credentials used over the last 24 hours Keylogger Attackers can install hardware or software keyloggers to capture all information typed into a keyboard. Keylogger software can also capture screenshots and other media and covertly send all of this information to the attacker using an existing Internet connection.",
 "tags": [
 "denial_of_service",
 "on_path_attacks",
@@ -230,7 +230,7 @@
 "domain": "5.0 Security Program Management and Oversight",
 "subtopic": "5.5",
 "type": "multiple_choice",
-"question": "A company has hired a third-party to gather information about the company's servers and data. This third-party will not have direct access to the company's internal network, but they can gather information from any otk source. Which of the following would BEST describe this approach?",
+"question": "A company has hired a third-party to gather information about the company's servers and data. This third-party will not have direct access to the company's internal network, but they can gather information from any other source. Which of the following would BEST describe this approach?",
 "options": [
 "A. Vulnerability scanning",
 "B. Passive reconnaissance",
@@ -249,7 +249,7 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.5",
 "type": "multiple_choice",
-"question": "A company's email server has received an email from a third-party, but the origination server does not match | list of authorized devices. Which of the following wou determine the disposition of this message?",
+"question": "A company's email server has received an email from a third-party, but the origination server does not match a list of authorized devices. Which of the following would determine the disposition of this message?",
 "options": [
 "A. SPF",
 "B. NAC",
@@ -344,15 +344,15 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.2",
 "type": "multiple_choice",
-"question": "A security administrator is concerned about the potential for data exfiltration using external storage drives. Which of the following would be the BEST way to prevent thi method of data exfiltration?",
+"question": "A security administrator is concerned about the potential for data exfiltration using external storage drives. Which of the following would be the BEST way to prevent this method of data exfiltration?",
 "options": [
 "A. Create an operating system security policy to block the use of removable media",
 "B. Monitor removable media usage in host-based firewall logs",
 "C. Only allow applications that do not use removable media",
-"D. Define a removable media block rule in the UT)"
+"D. Define a removable media block rule in the UTM"
 ],
 "correct_answer": "A",
-"explanation": "A security policy in the operating system can prevent any files from being written to a removable drive. The incorrect answers: B. Monitor removable media usage in host-based firewall logs A host-based firewall monitors traffic flows and does not commonly log hardware or USB drive access. C. Only allow applications that do not use removable media File storage access options are not associated with applications, so it's not possible to allow based on external storage drive usage. D. Define a removable media block rule in the UTM A UTM (Unified Threat Manager) watches traffic flows across the network and does not commonly manage the storage options on individual computers . fs] ~=",
+"explanation": "A security policy in the operating system can prevent any files from being written to a removable drive. The incorrect answers: B. Monitor removable media usage in host-based firewall logs A host-based firewall monitors traffic flows and does not commonly log hardware or USB drive access. C. Only allow applications that do not use removable media File storage access options are not associated with applications, so it's not possible to allow based on external storage drive usage. D. Define a removable media block rule in the UTM A UTM (Unified Threat Manager) watches traffic flows across the network and does not commonly manage the storage options on individual computers.",
 "tags": [
 "common_threat_vectors"
 ]
@@ -412,7 +412,7 @@
 "D. The Trojan was blocked, but the file was not"
 ],
 "correct_answer": "B",
-"explanation": "A file download is one of the most common ways to deliver a Trojan, and this log entry shows that the file containing the XPACK.A_7854 Trojan was blocked. The incorrect answers: A. The victim's IP address is 136.127.92.171 The format for this log entry uses an arrow to differentiate between the attacker and the victim. The attacker IP address is 136.127.92.171, and the victim's IP address is 10.16.10.14. C. A botnet DDoS attack was blocked A botnet attack would not commonly include a Trojan horse as part of a distributed denial of service (DDoS) attack. D. The Trojan was blocked, but the file was not A Trojan horse attack involves malware that is disguised as legitimate software. Ihe Trojan malware and the file are the same entity, so there isn't a way to decouple the malware from the file. OREO",
+"explanation": "A file download is one of the most common ways to deliver a Trojan, and this log entry shows that the file containing the XPACK.A_7854 Trojan was blocked. The incorrect answers: A. The victim's IP address is 136.127.92.171 The format for this log entry uses an arrow to differentiate between the attacker and the victim. The attacker IP address is 136.127.92.171, and the victim's IP address is 10.16.10.14. C. A botnet DDoS attack was blocked A botnet attack would not commonly include a Trojan horse as part of a distributed denial of service (DDoS) attack. D. The Trojan was blocked, but the file was not A Trojan horse attack involves malware that is disguised as legitimate software. The Trojan malware and the file are the same entity, so there isn't a way to decouple the malware from the file.",
 "tags": [
 "log_files"
 ]
@@ -535,7 +535,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.3",
 "type": "multiple_choice",
-"question": "The embedded OS in a company's time clock appliance configured to reset the file system and reboot when a fil system error occurs. On one of the time clocks, this file system error occurs during the startup process and cause the system to constantly reboot. Which of the following BEST describes this issue?",
+"question": "The embedded OS in a company's time clock appliance configured to reset the file system and reboot when a file system error occurs. On one of the time clocks, this file system error occurs during the startup process and cause the system to constantly reboot. Which of the following BEST describes this issue?",
 "options": [
 "A. Memory injection",
 "B. Resource consumption",
@@ -595,7 +595,7 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.3",
 "type": "multiple_choice",
-"question": "An internal audit has discovered four servers that hav not been updated in over a year, and it will take two weeks to test and deploy the latest patches. Which of the following would be the best way to quickly respond to this situation in the meantime?",
+"question": "An internal audit has discovered four servers that have not been updated in over a year, and it will take two weeks to test and deploy the latest patches. Which of the following would be the best way to quickly respond to this situation in the meantime?",
 "options": [
 "A. Purchase cybersecurity insurance",
 "B. Implement an exception for all data center servers",
@@ -956,7 +956,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.4",
 "type": "multiple_choice",
-"question": "An attacker has discovered a way to disable a server by sending specially crafted packets from many remote devices to the operating system. When the packet is received, the system crashes and must be rebooted to restore normal operations. Which of the following wou. BEST describe this attack?",
+"question": "An attacker has discovered a way to disable a server by sending specially crafted packets from many remote devices to the operating system. When the packet is received, the system crashes and must be rebooted to restore normal operations. Which of the following would BEST describe this attack?",
 "options": [
 "A. Privilege escalation",
 "B. SQL injection",
@@ -964,7 +964,7 @@
 "D. DDoS"
 ],
 "correct_answer": "D",
-"explanation": "Packets from multiple devices that disable a server would be an example of a DDoS attack. The incorrect answers: A. Privilege escalation A privilege escalation attack allows a user to exceed their normal rights and permissions. In this example, user permission escalations were not required to perform this attack. B. SQL injection A SQL (Structured Query Language) injection is used to circumvent an application and communicate directly to the application's database. In this question, there was no mention of application vulnerabilities or specific SQL statements. C. Replay attack A replay attack captures information and then replays that information as the method of attack. In this question, no mention was made of a prior data capture. fe) [8",
+"explanation": "Packets from multiple devices that disable a server would be an example of a DDoS attack. The incorrect answers: A. Privilege escalation A privilege escalation attack allows a user to exceed their normal rights and permissions. In this example, user permission escalations were not required to perform this attack. B. SQL injection A SQL (Structured Query Language) injection is used to circumvent an application and communicate directly to the application's database. In this question, there was no mention of application vulnerabilities or specific SQL statements. C. Replay attack A replay attack captures information and then replays that information as the method of attack. In this question, no mention was made of a prior data capture.",
 "tags": [
 "denial_of_service"
 ]
@@ -1011,7 +1011,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.3",
 "type": "multiple_choice",
-"question": "An organization has identified a significant vulnerability in an Internet-facing firewall. The firewall company h stated the firewall is no longer available for sale and there are no plans to create a patch for this vulnerability Which of the following would BEST describe this iss",
+"question": "An organization has identified a significant vulnerability in an Internet-facing firewall. The firewall company has stated the firewall is no longer available for sale and there are no plans to create a patch for this vulnerability. Which of the following would BEST describe this issue?",
 "options": [
 "A. End-of-life",
 "B. Improper input handling",
@@ -1019,7 +1019,7 @@
 "D. Incompatible OS"
 ],
 "correct_answer": "A",
-"explanation": "A product no longer supported by the manufacturer is consider to be end-of-life. The incorrect answers: B. Improper input handling A best practice for application security is to provide the proper handling of invalid or unnecessary input. A missing patch for the firewall firmware would not be related to input handling. C. Improper key management Cryptographic keys can be used for many security purposes, but managing those keys isn't part of the patching process from a vendor. D. Incompatible OS The operating system in the firewall would normally be supported by the manufacturer, and the operating systems are not commonly modified on a purpose-built device such as a firewall.",
+"explanation": "A product no longer supported by the manufacturer is considered to be end-of-life. The incorrect answers: B. Improper input handling A best practice for application security is to provide the proper handling of invalid or unnecessary input. A missing patch for the firewall firmware would not be related to input handling. C. Improper key management Cryptographic keys can be used for many security purposes, but managing those keys isn't part of the patching process from a vendor. D. Incompatible OS The operating system in the firewall would normally be supported by the manufacturer, and the operating systems are not commonly modified on a purpose-built device such as a firewall.",
 "tags": [
 "hardware_vulnerabilities"
 ]
@@ -1030,7 +1030,7 @@
 "domain": "3.0 Security Architecture",
 "subtopic": "3.4",
 "type": "multiple_choice",
-"question": "A company has decided to perform a disaster recover exercise during an annual meeting with the IT direct¢ and senior directors. A simulated disaster will be presented, and the participants will discuss the logistics and processes required to resolve the disaster. Which | the following would BEST describe this exercise?",
+"question": "A company has decided to perform a disaster recovery exercise during an annual meeting with the IT director and senior directors. A simulated disaster will be presented, and the participants will discuss the logistics and processes required to resolve the disaster. Which of the following would BEST describe this exercise?",
 "options": [
 "A. Capacity planning",
 "B. Business impact analysis",
@@ -1106,7 +1106,7 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.9",
 "type": "multiple_choice",
-"question": "An administrator is viewing the following security los Dec 30 08:40:03 web01 Failed password for rc from 10.101.88.230 port 26244 ssh2 Dec 30 08:40:05 web01 Failed password for rc from 10.101.88.230 port 26244 ssh2 Dec 30 08:40:09 web01 445 more authentication failures; rhost=10.101.88.230 user=root Which of the following would describe this attack?",
+"question": "An administrator is viewing the following security log: Dec 30 08:40:03 web01 Failed password for rc from 10.101.88.230 port 26244 ssh2 Dec 30 08:40:05 web01 Failed password for rc from 10.101.88.230 port 26244 ssh2 Dec 30 08:40:09 web01 445 more authentication failures; rhost=10.101.88.230 user=root Which of the following would describe this attack?",
 "options": [
 "A. Spraying",
 "B. Downgrade",
@@ -1114,7 +1114,7 @@
 "D. DDoS"
 ],
 "correct_answer": "C",
-"explanation": "In this example, the notification of over four hundred attempts would qualify as a brute force attack. The incorrect answers: A. Spraying A spraying attack is similar to a brute force attack, but spraying limits the number of attempts to prevent alerts or an account lockout. A spraying attack often uses accounts passwords stolen from other sites or a short list of the most common passwords. B. Downgrade A downgrade attack is often used to force an insecure encryption algorithm or the disabling of encryption entirely. In this example, no evidence of a downgrade attack is contained in the security log. D. DDoS A DDoS (Distributed Denial of Service) would involve many different devices to cause a system outage. In this example, a single IP address was logged and there was no evidence of a service outage. ORE",
+"explanation": "In this example, the notification of over four hundred attempts would qualify as a brute force attack. The incorrect answers: A. Spraying A spraying attack is similar to a brute force attack, but spraying limits the number of attempts to prevent alerts or an account lockout. A spraying attack often uses accounts passwords stolen from other sites or a short list of the most common passwords. B. Downgrade A downgrade attack is often used to force an insecure encryption algorithm or the disabling of encryption entirely. In this example, no evidence of a downgrade attack is contained in the security log. D. DDoS A DDoS (Distributed Denial of Service) would involve many different devices to cause a system outage. In this example, a single IP address was logged and there was no evidence of a service outage.",
 "tags": [
 "log_data"
 ]
@@ -1147,7 +1147,7 @@
 "question": "Which of the following describes two-factor authentication?",
 "options": [
 "A. A printer uses a password and a PIN",
-"B. The door to a building requires a fingerprint scz",
+"B. The door to a building requires a fingerprint scan",
 "C. An application requires a pseudo-random code",
 "D. A Windows Domain requires a password and smart card"
 ],
@@ -1228,7 +1228,7 @@
 "D. Hacktivist"
 ],
 "correct_answer": "D",
-"explanation": "The incorrect answers: A. Insider An insider has access to many company services, but the motivations of an insider threat would not commonly result in the posting of political information. B. Organized crime Organized crime actors are motivated by money. It would be unusual for an organized crime hack to include the posting of political messages. C. Shadow IT A shadow IT group is mostly interested in building their own systems and applications, and they would not commonly deface a website in an attempt to spread a specific political message. | a f=",
+"explanation": "The incorrect answers: A. Insider An insider has access to many company services, but the motivations of an insider threat would not commonly result in the posting of political information. B. Organized crime Organized crime actors are motivated by money. It would be unusual for an organized crime hack to include the posting of political messages. C. Shadow IT A shadow IT group is mostly interested in building their own systems and applications, and they would not commonly deface a website in an attempt to spread a specific political message.",
 "tags": null
 },
 {
@@ -1321,7 +1321,7 @@
 "D. Avoid"
 ],
 "correct_answer": "B",
-"explanation": "This is commonly done through the use of additional security systems and monitoring, such as an NGFW (Next-Generation Firewall). The incorrect answers: A. Transfer Transferring risk would move the risk from one entity to another. Adding an NGFW would not transfer any risk to another party. C. Accept The acceptance of risk is a position where the owner understands the risk and has decided to accept the potential results. D. Avoidance With risk avoidance, the owner of the risk decides to stop participating in a high-risk activity. This effectively avoids the risky activity and prevents any future issues. | ee f=)",
+"explanation": "This is commonly done through the use of additional security systems and monitoring, such as an NGFW (Next-Generation Firewall). The incorrect answers: A. Transfer Transferring risk would move the risk from one entity to another. Adding an NGFW would not transfer any risk to another party. C. Accept The acceptance of risk is a position where the owner understands the risk and has decided to accept the potential results. D. Avoidance With risk avoidance, the owner of the risk decides to stop participating in a high-risk activity. This effectively avoids the risky activity and prevents any future issues.",
 "tags": [
 "firewall_types"
 ]
@@ -1359,7 +1359,7 @@
 "D. Right-to-audit clause"
 ],
 "correct_answer": "C",
-"explanation": "For example, the customer responsibilities for an IaaS (Infrastructure as a Service) implementation will be different than SaaS (Software as a Service). The incorrect answers: A. Playbook A playbook provides conditional steps to follow when managing an organization's processes and procedures. For example, the process of recovering from a virus infection would be documented in a playbook. B. Audit committee An audit committee oversees the risk management activities for an organization. For example, the committee would be responsible for verifying the security implementation documented in the responsibility matrix. D. Right-to-audit clause A right-to-audit clause is often included in a third-party contract to define the terms and conditions around periodic audits. This is often part of a larger product or services contract. oye oo",
+"explanation": "For example, the customer responsibilities for an IaaS (Infrastructure as a Service) implementation will be different than SaaS (Software as a Service). The incorrect answers: A. Playbook A playbook provides conditional steps to follow when managing an organization's processes and procedures. For example, the process of recovering from a virus infection would be documented in a playbook. B. Audit committee An audit committee oversees the risk management activities for an organization. For example, the committee would be responsible for verifying the security implementation documented in the responsibility matrix. D. Right-to-audit clause A right-to-audit clause is often included in a third-party contract to define the terms and conditions around periodic audits. This is often part of a larger product or services contract.",
 "tags": [
 "cloud_infrastructures"
 ]
@@ -1414,7 +1414,7 @@
 "D. Public"
 ],
 "correct_answer": "A",
-"explanation": "'To ensure continued access to the encrypted data, the company must have a copy of each private key. The incorrect answers: B. CA A CA (Certificate Authority) key is commonly used to validate the digital signature from a trusted CA. This is not commonly used for user data encryption. C. Session Session keys are commonly used temporarily to provide confidentiality during a single session. Once the session is complete, the keys are discarded. Session keys are not used to provide long-term data encryption. D. Public In asymmetric encryption, a public key is already available to everyone. It would not be necessary to escrow a public key. Esl",
+"explanation": "'To ensure continued access to the encrypted data, the company must have a copy of each private key. The incorrect answers: B. CA A CA (Certificate Authority) key is commonly used to validate the digital signature from a trusted CA. This is not commonly used for user data encryption. C. Session Session keys are commonly used temporarily to provide confidentiality during a single session. Once the session is complete, the keys are discarded. Session keys are not used to provide long-term data encryption. D. Public In asymmetric encryption, a public key is already available to everyone. It would not be necessary to escrow a public key.",
 "tags": [
 "public_key_infrastructure"
 ]
@@ -1681,7 +1681,7 @@
 "D. SSL stripping"
 ],
 "correct_answer": "C",
-"explanation": "The incorrect answers: A. Cross-site scripting Cross-site scripting takes advantage of a third-party trust to a web application. The attack demonstrated in this question does not use another user's credentials or access rights to obtain information. B. Buffer overflow A buffer overflow uses an application vulnerability to submit more information than an application can properly manage. The attack syntax in this question is specific to SQL injections, and it does not appear to be manipulating a buffer overflow vulnerability. D. SSL stripping SSL stripping is a downgrade attack that modifies web site addresses to allow access to encrypted information. The attack in this question does not appear to include a third-party. Mésci",
+"explanation": "The incorrect answers: A. Cross-site scripting Cross-site scripting takes advantage of a third-party trust to a web application. The attack demonstrated in this question does not use another user's credentials or access rights to obtain information. B. Buffer overflow A buffer overflow uses an application vulnerability to submit more information than an application can properly manage. The attack syntax in this question is specific to SQL injections, and it does not appear to be manipulating a buffer overflow vulnerability. D. SSL stripping SSL stripping is a downgrade attack that modifies web site addresses to allow access to encrypted information. The attack in this question does not appear to include a third-party.",
 "tags": [
 "sql_injection"
 ]
@@ -1847,7 +1847,7 @@
 "question": "In the NIST/SANS incident response process, which phase comes immediately after Containment (and involves removing malware and patching the exploited vulnerability)?",
 "options": null,
 "correct_answer": "Eradication",
-"explanation": "B3. Place the incident response activities in the correct order: Preparation Detection Analysis Containment Eradication Recovery Lessons learned Preparation - The preparation phase includes all of the work prior to the incident. This may include collecting hardware, installing software, gathering documentation, and managing incident response policies. Detection - The detection phase includes any method of identifying and determining an incident may be actively occurring. This process also includes identifying a legitimate threat and not a false positive. Analysis - The analysis phase provides detailed evidence for a security incident. Alarms, alerts, reports, and other feedback can be categorized as analysis. Containment - Once an incident has been identified, it's important to prevent the potential spread of any malicious code. Eradication - Removing any malicious software and patching any vulnerabilities would be part of the eradication process. Recovery - The recovery phase often includes rebuilding systems and replacing any compromised data. Lessons learned - After the event is over, it's useful to document the process and discuss how the incident response process could be more efficient if a similar event occurs in the future. eet",
+"explanation": "B3. Place the incident response activities in the correct order: Preparation Detection Analysis Containment Eradication Recovery Lessons learned Preparation - The preparation phase includes all of the work prior to the incident. This may include collecting hardware, installing software, gathering documentation, and managing incident response policies. Detection - The detection phase includes any method of identifying and determining an incident may be actively occurring. This process also includes identifying a legitimate threat and not a false positive. Analysis - The analysis phase provides detailed evidence for a security incident. Alarms, alerts, reports, and other feedback can be categorized as analysis. Containment - Once an incident has been identified, it's important to prevent the potential spread of any malicious code. Eradication - Removing any malicious software and patching any vulnerabilities would be part of the eradication process. Recovery - The recovery phase often includes rebuilding systems and replacing any compromised data. Lessons learned - After the event is over, it's useful to document the process and discuss how the incident response process could be more efficient if a similar event occurs in the future.",
 "tags": [
 "incident_response"
 ]
@@ -1989,7 +1989,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.4",
 "type": "multiple_choice",
-"question": "While working from home, users are attending a project meeting over a web conference. When typing in the meeting link, the browser is unexpectedly directed to different website than the web conference. Users in th office do not have any issues accessing the conference site. Which of the following would be the MOST lik reason for this issue?",
+"question": "While working from home, users are attending a project meeting over a web conference. When typing in the meeting link, the browser is unexpectedly directed to different website than the web conference. Users in th office do not have any issues accessing the conference site. Which of the following would be the MOST likely reason for this issue?",
 "options": [
 "A. Buffer overflow",
 "B. Wireless disassociation",
@@ -2156,7 +2156,7 @@
 "domain": "5.0 Security Program Management and Oversight",
 "subtopic": "5.2",
 "type": "multiple_choice",
-"question": "A transportation company is installing new wireless access points in their corporate office. The manufacturer estimates the access points will operate an average of 100,000 hours before a hardware-related outage. Whi of the following describes this estimate?",
+"question": "A transportation company is installing new wireless access points in their corporate office. The manufacturer estimates the access points will operate an average of 100,000 hours before a hardware-related outage. Which of the following describes this estimate?",
 "options": [
 "A. MTTR",
 "B. RPO",
@@ -2164,7 +2164,7 @@
 "D. MTBF"
 ],
 "correct_answer": "D",
-"explanation": "This is usually an estimation based on the internal device components and their expected operational lifetime. The incorrect answers: A. MTTR MTTR (Mean Time to Repair) is the time required to repair a product or system after a failure. B. RPO RPO (Recovery Point Objectives) define how much data loss would be acceptable during a recovery. C. RTO RTO (Recovery Time Objectives) define the minimum objectives required to get up and running to a particular service level. fs",
+"explanation": "This is usually an estimation based on the internal device components and their expected operational lifetime. The incorrect answers: A. MTTR MTTR (Mean Time to Repair) is the time required to repair a product or system after a failure. B. RPO RPO (Recovery Point Objectives) define how much data loss would be acceptable during a recovery. C. RTO RTO (Recovery Time Objectives) define the minimum objectives required to get up and running to a particular service level.",
 "tags": [
 "business_impact_analysis"
 ]
@@ -2249,7 +2249,7 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.5",
 "type": "multiple_choice",
-"question": "A recent security audit has discovered email addresses and passwords located in a packet capture. Which of | following did the audit identify?",
+"question": "A recent security audit has discovered email addresses and passwords located in a packet capture. Which of the following did the audit identify?",
 "options": [
 "A. Weak encryption",
 "B. Improper patch management",
@@ -2344,7 +2344,7 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.9",
 "type": "multiple_choice",
-"question": "A security administrator is viewing the logs on a laptop in the shipping and receiving department and identifies these events: 8:55:30 AM | D:\\Downloads\\ChangeLog-5.0.4.scr | Quarantine S 9:22:54 AM | C:\\Program Files\\Photo Viewer\\ViewerBase.dll |. 9:44:05 AM | C:\\Sales\\Sample32.dat | Quarantine Success Which of the following would BEST describe the circumstances surrounding these events?",
+"question": "A security administrator is viewing the logs on a laptop in the shipping and receiving department and identifies these events: 8:55:30 AM | D:\\Downloads\\ChangeLog-5.0.4.scr | Quarantine Success\n9:22:54 AM | C:\\Program Files\\Photo Viewer\\ViewerBase.dll | Quarantine Failed\n9:44:05 AM | C:\\Sales\\Sample32.dat | Quarantine Success Which of the following would BEST describe the circumstances surrounding these events?",
 "options": [
 "A. The antivirus application identified three viruses and quarantined two viruses",
 "B. The host-based firewall blocked two traffic flows",
@@ -2363,7 +2363,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.3",
 "type": "multiple_choice",
-"question": "In the past, an organization has relied on the curated Apple App Store to avoid issues associated with malware and insecure applications. However, the IT department has discovered an iPhone in the shipping department with applications not available on the Apple App Sto How did the shipping department user install these a on their mobile device?",
+"question": "In the past, an organization has relied on the curated Apple App Store to avoid issues associated with malware and insecure applications. However, the IT department has discovered an iPhone in the shipping department with applications not available on the Apple App Store. How did the shipping department user install these apps on their mobile device?",
 "options": [
 "A. Side loading",
 "B. Malicious update",
@@ -2523,7 +2523,7 @@
 "D. Network access control"
 ],
 "correct_answer": "C",
-"explanation": "The incorrect answers: A. SCAP The SCAP (Security Content Automation Protocol) is used as a common protocol across multiple security tools. SCAP is not used to provide an encrypted tunnel between two locations. B. Screened subnet A screened subnet is a protected area commonly used to host public services without allowing access to an organization's internal private network. D. Network access control Network access control (NAC) describes the authentication and authorization process when devices connect to a network. NAC is not used to connect two sites over an encrypted channel. Mtl",
+"explanation": "The incorrect answers: A. SCAP The SCAP (Security Content Automation Protocol) is used as a common protocol across multiple security tools. SCAP is not used to provide an encrypted tunnel between two locations. B. Screened subnet A screened subnet is a protected area commonly used to host public services without allowing access to an organization's internal private network. D. Network access control Network access control (NAC) describes the authentication and authorization process when devices connect to a network. NAC is not used to connect two sites over an encrypted channel.",
 "tags": [
 "secure_communication"
 ]
@@ -2534,7 +2534,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.4",
 "type": "multiple_choice",
-"question": "A Linux administrator has received a ticket complaining of response issues with a database server. After connecting to the server, the administrator views this information: Filesystem Size Used Avail Use% Mount: /dev/xvdal 158G 158G 0 100% / Which of the following would BEST describe this information?",
+"question": "A Linux administrator has received a ticket complaining of response issues with a database server. After connecting to the server, the administrator views this information: Filesystem Size Used Avail Use% Mount: /dev/xvda1 158G 158G 0 100% / Which of the following would BEST describe this information?",
 "options": [
 "A. Buffer overflow",
 "B. Resource consumption",
@@ -2828,7 +2828,7 @@
 "D. Legal hold"
 ],
 "correct_answer": "C",
-"explanation": "The chain of custody also documents the interactions of every person who comes into contact with the evidence to maintain the integrity. The incorrect answers: A. E-discovery E-discovery is the process of collecting, preparing, reviewing, interpreting, and producing electronic documents. However, e-discovery does not provide any additional integrity of the data. B. Non-repudiation Non-repudiation ensures the author of a document cannot be disputed. Non-repudiation does not provide any method of tracking and managing digital evidence. D. Legal hold A legal hold is a technique for preserving important evidence, but it doesn't provide any mechanism for the ongoing integrity of that evidence. [feo",
+"explanation": "The chain of custody also documents the interactions of every person who comes into contact with the evidence to maintain the integrity. The incorrect answers: A. E-discovery E-discovery is the process of collecting, preparing, reviewing, interpreting, and producing electronic documents. However, e-discovery does not provide any additional integrity of the data. B. Non-repudiation Non-repudiation ensures the author of a document cannot be disputed. Non-repudiation does not provide any method of tracking and managing digital evidence. D. Legal hold A legal hold is a technique for preserving important evidence, but it doesn't provide any mechanism for the ongoing integrity of that evidence.",
 "tags": [
 "digital_forensics"
 ]
@@ -2923,7 +2923,7 @@
 "D. SASE"
 ],
 "correct_answer": "A",
-"explanation": "WAFs are commonly used to protect against application attacks such as injections, cross-site scripting, and invalid input types. The incorrect answers: B. VPN concentrator A VPN (Virtual Private Network) concentrator is the central connectivity point for all remote VPN users. A VPN concentrator would not be used as protection against application attacks. C.UTM A UTM (Unified Threat Management) appliance acts as a traditional firewall, and many UTMs may also include additional features such as intrusion prevention and content filtering. However, UTMs are not commonly used for protection of web-based applications. D. SASE SASE (Secure Access Service Edge) is a cloud-aware version of a VPN client, and it is commonly deployed as a client on the user device. A SASE solution would not commonly be used to protect a web-based application. ' ™ | sfa",
+"explanation": "WAFs are commonly used to protect against application attacks such as injections, cross-site scripting, and invalid input types. The incorrect answers: B. VPN concentrator A VPN (Virtual Private Network) concentrator is the central connectivity point for all remote VPN users. A VPN concentrator would not be used as protection against application attacks. C.UTM A UTM (Unified Threat Management) appliance acts as a traditional firewall, and many UTMs may also include additional features such as intrusion prevention and content filtering. However, UTMs are not commonly used for protection of web-based applications. D. SASE SASE (Secure Access Service Edge) is a cloud-aware version of a VPN client, and it is commonly deployed as a client on the user device. A SASE solution would not commonly be used to protect a web-based application.",
 "tags": [
 "firewall_types"
 ]
@@ -2939,10 +2939,10 @@
 "A. Use a tamper seal on all storage devices",
 "B. Create a hash of the data",
 "C. Image each storage device for future comparison",
-"D. Take screenshots of file directories with file siz"
+"D. Take screenshots of file directories with file sizes"
 ],
 "correct_answer": "B",
-"explanation": "If the hash value changes, then the data must have also changed. The incorrect answers: A. Use a tamper seal on all storage devices A physical tamper seal will identify if a device has been opened or physically modified, but it cannot identify any changes to the data on the storage device. C. Image each storage device for future comparison A copy of the data would allow for comparisons later, but the process of comparing the data would take much more time than simply validating a hash value. It's also possible that someone could tamper with both the original data and the copy of the data. D. Take screenshots of file directories with file sizes It's very easy to change the contents of a file without changing the size of the file. Storing the file sizes would not provide any data integrity checks. lho",
+"explanation": "If the hash value changes, then the data must have also changed. The incorrect answers: A. Use a tamper seal on all storage devices A physical tamper seal will identify if a device has been opened or physically modified, but it cannot identify any changes to the data on the storage device. C. Image each storage device for future comparison A copy of the data would allow for comparisons later, but the process of comparing the data would take much more time than simply validating a hash value. It's also possible that someone could tamper with both the original data and the copy of the data. D. Take screenshots of file directories with file sizes It's very easy to change the contents of a file without changing the size of the file. Storing the file sizes would not provide any data integrity checks.",
 "tags": [
 "digital_forensics"
 ]
@@ -2953,7 +2953,7 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.6",
 "type": "multiple_choice",
-"question": "A system administrator is implementing a password policy that would require letters, numbers, and special characters to be included in every password. Which of the following controls MUST be in place to enforce thi password policy?",
+"question": "A system administrator is implementing a password policy that would require letters, numbers, and special characters to be included in every password. Which of the following controls MUST be in place to enforce this password policy?",
 "options": [
 "A. Length",
 "B. Expiration",
@@ -3018,7 +3018,7 @@
 "D. WAF"
 ],
 "correct_answer": "B",
-"explanation": "e., Tripwire, System File Checker, etc.) can be used to alert if the contents of a file are modified. The incorrect answers: A. HIPS The use of HIPS (Host-based Intrusion Prevention System) would help identify any security vulnerabilities, but there's nothing relating to this issue that would indicate it was caused by an operating system or application vulnerability. A HIPS would not commonly alert on the modification of a specific file. C. Application allow list In this example, we're not sure how the file was changed or if a separate application or editor was used. If the change was made with a valid application, an allow list would not provide any feedback or alerts. D. WAF A WAF (Web Application Firewall) is used to protect web-based applications from malicious attack. The example in this question was not related to a web-based application.",
+"explanation": "File integrity monitoring (i.e., Tripwire, System File Checker, etc.) can be used to alert if the contents of a file are modified. The incorrect answers: A. HIPS The use of HIPS (Host-based Intrusion Prevention System) would help identify any security vulnerabilities, but there's nothing relating to this issue that would indicate it was caused by an operating system or application vulnerability. A HIPS would not commonly alert on the modification of a specific file. C. Application allow list In this example, we're not sure how the file was changed or if a separate application or editor was used. If the change was made with a valid application, an allow list would not provide any feedback or alerts. D. WAF A WAF (Web Application Firewall) is used to protect web-based applications from malicious attack. The example in this question was not related to a web-based application.",
 "tags": [
 "monitoring_data"
 ]
@@ -3065,12 +3065,12 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.2",
 "type": "multiple_choice",
-"question": "A company has deployed laptops to all employees, anc each laptop is enumerated during each login. Which « the following is supported with this configuration?",
+"question": "A company has deployed laptops to all employees, and each laptop is enumerated during each login. Which of the following is supported with this configuration?",
 "options": [
 "A. If the laptop hardware is modified, the security team is alerted",
 "B. Any malware identified on the system is automatically deleted",
 "C. Users are required to use at least two factors of authentication",
-"D. The laptop is added to a private VLAN after tk login process"
+"D. The laptop is added to a private VLAN after the login process"
 ],
 "correct_answer": "A",
 "explanation": "If this configuration is changed, an alert can be generated. The incorrect answers: B. Any malware identified on the system is automatically deleted Although it's very likely the laptop is running some type of anti-malware software, this question was regarding the enumeration process. C. Users are required to use at least two factors of authentication It's always a good idea to support multifactor authentication, but the enumeration process does not support any additional authentication factors. D. The laptop is added to a private VLAN after the login process Many organizations can identify the login and automatically move that device to the correct VLANs. The enumeration mentioned does not provide this functionality. SY0-701, Objective 4.2 - Asset Management https://professormesser.link/701040201",
@@ -3430,7 +3430,7 @@
 "domain": "5.0 Security Program Management and Oversight",
 "subtopic": "5.2",
 "type": "multiple_choice",
-"question": "Which of the following would be the best way to describe the estimated number of laptops that might | stolen in a fiscal year?",
+"question": "Which of the following would be the best way to describe the estimated number of laptops that might be stolen in a fiscal year?",
 "options": [
 "A. ALE",
 "B. SLE",
@@ -3438,7 +3438,7 @@
 "D. MTTR"
 ],
 "correct_answer": "C",
-"explanation": "For example, if the organization expect to lose seven laptops to theft in a year, the ARO for laptop theft is seven. The incorrect answers: A. ALE The ALE (Annual Loss Expectancy) is the expected cost for all events in a single year. If it costs $1,000 to replace a single laptop (the SLE) and you expect to lose seven laptops in a year (the ARO), the ALE for laptop theft is $7,000. B. SLE SLE (Single Loss Expectancy) is the monetary loss if a single event occurs. If one laptop is stolen, the cost to replace that single laptop is the SLE, or $1,000. D. MTTR MTTR (Mean Time to Repair) is the time required to repair a product or system after a failure. =[a",
+"explanation": "For example, if the organization expect to lose seven laptops to theft in a year, the ARO for laptop theft is seven. The incorrect answers: A. ALE The ALE (Annual Loss Expectancy) is the expected cost for all events in a single year. If it costs $1,000 to replace a single laptop (the SLE) and you expect to lose seven laptops in a year (the ARO), the ALE for laptop theft is $7,000. B. SLE SLE (Single Loss Expectancy) is the monetary loss if a single event occurs. If one laptop is stolen, the cost to replace that single laptop is the SLE, or $1,000. D. MTTR MTTR (Mean Time to Repair) is the time required to repair a product or system after a failure.",
 "tags": [
 "risk_analysis"
 ]
@@ -3461,15 +3461,15 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.2",
 "type": "multiple_choice",
-"question": "A finance company is legally required to maintain seven years of tax records for all of their customers. Which o the following would be the BEST way to implement this requirement?",
+"question": "A finance company is legally required to maintain seven years of tax records for all of their customers. Which of the following would be the BEST way to implement this requirement?",
 "options": [
 "A. Automate a script to remove all tax information more than seven years old",
-"B. Print and store all tax records in a seven-year cy}",
+"B. Print and store all tax records in a seven-year cycle",
 "C. Allow users to download tax records from their account login",
 "D. Create a separate daily backup archive for all applicable tax records"
 ],
 "correct_answer": "D",
-"explanation": "In this example, a daily backup would ensure tax information is constantly archived over a seven year period and could always be retrieved if needed. If data was inadvertently deleted from the primary storage, the backup would still maintain a copy. The incorrect answers: A. Automate a script to remove all tax information more than seven years old The requirement is to maintain data for at least seven years, but there's no requirement to remove that data after that time frame. For example, some financial information may need to be retained well beyond the seven year mandate. B. Print and store all tax records in a seven-year cycle Paper has its place, but creating physical output of tax records and storing them for seven years would include a significant cost in time, materials, and inventory space. Ihe requirement to store data for seven years doesn't require the information to be stored in a physical form. C. Allow users to download tax records from their account login Including a feature to allow access to their records is useful for the user community, but it doesn't provide any data protection for the seven year retention period.",
+"explanation": "In this example, a daily backup would ensure tax information is constantly archived over a seven year period and could always be retrieved if needed. If data was inadvertently deleted from the primary storage, the backup would still maintain a copy. The incorrect answers: A. Automate a script to remove all tax information more than seven years old The requirement is to maintain data for at least seven years, but there's no requirement to remove that data after that time frame. For example, some financial information may need to be retained well beyond the seven year mandate. B. Print and store all tax records in a seven-year cycle Paper has its place, but creating physical output of tax records and storing them for seven years would include a significant cost in time, materials, and inventory space. The requirement to store data for seven years doesn't require the information to be stored in a physical form. C. Allow users to download tax records from their account login Including a feature to allow access to their records is useful for the user community, but it doesn't provide any data protection for the seven year retention period.",
 "tags": [
 "asset_management"
 ]
@@ -3575,7 +3575,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.1",
 "type": "multiple_choice",
-"question": "A company maintains a server farm in a large data cet These servers are used internally and are not accessible from outside of the data center. The security team has discovered a group of servers was breached before the latest security patches were applied. Breach attempts were not logged on any other servers. Which of these threat actors would be MOST likely involved in this breach?",
+"question": "A company maintains a server farm in a large data center. These servers are used internally and are not accessible from outside of the data center. The security team has discovered a group of servers was breached before the latest security patches were applied. Breach attempts were not logged on any other servers. Which of these threat actors would be MOST likely involved in this breach?",
 "options": [
 "A. Organized crime",
 "B. Insider",
@@ -3583,7 +3583,7 @@
 "D. Unskilled attacker"
 ],
 "correct_answer": "B",
-"explanation": "To complete this attack, there would need a very specific knowledge of the vulnerable systems and a way to communicate with those servers. The incorrect answers: A. Organized crime Organized crime can be very effective at hacking systems and companies, but they can only affect systems where they have access. Internal servers would not be accessible to anyone on the outside of the organization. C. Nation state A nation state would have the resources needed to attack a network, gain access to the internal systems, and then somehow monitor the update processes for each server. However, the scope and breadth of such an attack would be complex, and this would make the nation state a very speculative option and not the most likely choice from the available list. D. Unskilled attacker Unskilled attackers don't usually have access to an internal network, and they generally aren't knowledgeable enough to track the status of which systems may have been recently updated. eel",
+"explanation": "To complete this attack, there would need a very specific knowledge of the vulnerable systems and a way to communicate with those servers. The incorrect answers: A. Organized crime Organized crime can be very effective at hacking systems and companies, but they can only affect systems where they have access. Internal servers would not be accessible to anyone on the outside of the organization. C. Nation state A nation state would have the resources needed to attack a network, gain access to the internal systems, and then somehow monitor the update processes for each server. However, the scope and breadth of such an attack would be complex, and this would make the nation state a very speculative option and not the most likely choice from the available list. D. Unskilled attacker Unskilled attackers don't usually have access to an internal network, and they generally aren't knowledgeable enough to track the status of which systems may have been recently updated.",
 "tags": [
 "threat_actors"
 ]
@@ -3659,7 +3659,7 @@
 "D. source: ANY, Destination: ANY, Protocol: TCP, Port: 443, Allow"
 ],
 "correct_answer": "D",
-"explanation": "The incorrect answers: A. Source: ANY, Destination: ANY, Protocol: TCP, Port: 23, Deny The insecure Telnet protocol commonly uses tcp/23, but most web servers would not be listening on tep/23. An explicit tep/23 deny rule would not provide any additional web server security. B. Source: ANY, Destination: ANY, Protocol: TCP, Port: 22, Allow The SSH (Secure Shell) protocol uses tep/22 to provide encrypted terminal communication, but the web server does not use SSH when communicating with client web browsers. E. source: ANY, Destination: ANY, Protocol: TCP, Port: 80, Allow Unencrypted web communication commonly uses tcp/80. Since the application owner requires encrypted communication, allowing HTTP over tcp/80 should not be allowed through the firewall. \"eA = SY0-701, Objective 4.5 - Firewalls https://professormesser.link/701040501 i f=",
+"explanation": "The incorrect answers: A. Source: ANY, Destination: ANY, Protocol: TCP, Port: 23, Deny The insecure Telnet protocol commonly uses tcp/23, but most web servers would not be listening on tcp/23. An explicit tcp/23 deny rule would not provide any additional web server security. B. Source: ANY, Destination: ANY, Protocol: TCP, Port: 22, Allow The SSH (Secure Shell) protocol uses tcp/22 to provide encrypted terminal communication, but the web server does not use SSH when communicating with client web browsers. E. source: ANY, Destination: ANY, Protocol: TCP, Port: 80, Allow Unencrypted web communication commonly uses tcp/80. Since the application owner requires encrypted communication, allowing HTTP over tcp/80 should not be allowed through the firewall. SY0-701, Objective 4.5 - Firewalls — https://professormesser.link/701040501",
 "tags": [
 "firewalls"
 ]
@@ -3708,7 +3708,7 @@
 "domain": "5.0 Security Program Management and Oversight",
 "subtopic": "5.1",
 "type": "multiple_choice",
-"question": "A company's human resources team maintains a list o all employees participating in the corporate savings pl A third-party financial company uses this information manage stock investments for the employees. Which | the following would describe this financial company?",
+"question": "A company's human resources team maintains a list of all employees participating in the corporate savings plan. A third-party financial company uses this information to manage stock investments for the employees. Which of the following would describe this financial company?",
 "options": [
 "A. Processor",
 "B. Owner",
@@ -3716,7 +3716,7 @@
 "D. Custodian"
 ],
 "correct_answer": "A",
-"explanation": "In this example, the third-party financial organization is the data processor of the employee's financial data. The incorrect answers: B. Owner The data owner is often an executive of the company and is ultimately responsible for the use and security of this data. C. Controller A data controller manages the data. In this example, the human resources team would control the access and use of the employee data. D. Custodian A data custodian is responsible for the accuracy, privacy, and security of the data. Many organizations will hire data custodians to ensure all data is properly protected and maintained. f=",
+"explanation": "In this example, the third-party financial organization is the data processor of the employee's financial data. The incorrect answers: B. Owner The data owner is often an executive of the company and is ultimately responsible for the use and security of this data. C. Controller A data controller manages the data. In this example, the human resources team would control the access and use of the employee data. D. Custodian A data custodian is responsible for the accuracy, privacy, and security of the data. Many organizations will hire data custodians to ensure all data is properly protected and maintained.",
 "tags": [
 "data_roles_and_responsibilities"
 ]
@@ -3746,7 +3746,7 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.7",
 "type": "multiple_choice",
-"question": "An administrator is writing a script to convert an emz message to a help desk ticket and assign the ticket to correct department. Which of the following should b« administrator use to complete this script?",
+"question": "An administrator is writing a script to convert an email message to a help desk ticket and assign the ticket to the correct department. Which of the following should the administrator use to complete this script?",
 "options": [
 "A. Role-based access controls",
 "B. Federation",
@@ -3822,7 +3822,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.3",
 "type": "multiple_choice",
-"question": "A network IPS has created this log entry: Frame 4: 937 bytes on wire (7496 bits), 937 bytes captured Ethernet II, Src: HewlettP_82:d8:31, Dst: Cisco_al:b0:dl Internet Protocol Version 4, Src: 172.16.22.7, Dst: 10.8.122.244 Transmission Control Protocol, Src Port: 3863, Dst Port: 1433 Application Data: SELECT * FROM users WHERE username='x' or 'x'='x' AND password='x' or 'x'='x' Which of the following would describe this log entry?",
+"question": "A network IPS has created this log entry: Frame 4: 937 bytes on wire (7496 bits), 937 bytes captured Ethernet II, Src: HewlettP_82:d8:31, Dst: Cisco_a1:b0:d1 Internet Protocol Version 4, Src: 172.16.22.7, Dst: 10.8.122.244 Transmission Control Protocol, Src Port: 3863, Dst Port: 1433 Application Data: SELECT * FROM users WHERE username='x' or 'x'='x' AND password='x' or 'x'='x' Which of the following would describe this log entry?",
 "options": [
 "A. Phishing",
 "B. Brute force",
@@ -3830,7 +3830,7 @@
 "D. Cross-site scripting"
 ],
 "correct_answer": "C",
-"explanation": "The attacker was attempting to circumvent the authentication through the use of equivalent SQL statements ('x'='x'). The incorrect answers: A. Phishing Phishing attempts use social engineering to gain access to private or sensitive information. This example does not appear to contain any private information. B. Brute force A brute force attempt would include many failed attempts at a password. This log does not appear to have any repeated password attempts. D. Cross-site scripting Cross-site scripting takes advantage of the trust a user has for a site. This example does not appear to take advantage of any previous authentication or trust. f=",
+"explanation": "The attacker was attempting to circumvent the authentication through the use of equivalent SQL statements ('x'='x'). The incorrect answers: A. Phishing Phishing attempts use social engineering to gain access to private or sensitive information. This example does not appear to contain any private information. B. Brute force A brute force attempt would include many failed attempts at a password. This log does not appear to have any repeated password attempts. D. Cross-site scripting Cross-site scripting takes advantage of the trust a user has for a site. This example does not appear to take advantage of any previous authentication or trust.",
 "tags": [
 "sql_injection"
 ]
@@ -3860,15 +3860,15 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.5",
 "type": "multiple_choice",
-"question": "A system administrator has installed a new firewall between the corporate user network and the data cent network. When the firewall is turned on with the def settings, users complain that the application in the da center is no longer working. Which of the following would be the BEST way to correct this application is:",
+"question": "A system administrator has installed a new firewall between the corporate user network and the data center network. When the firewall is turned on with the default settings, users complain that the application in the data center is no longer working. Which of the following would be the BEST way to correct this application issue?",
 "options": [
-"A. Create a single firewall rule with an explicit det",
+"A. Create a single firewall rule with an explicit deny",
 "B. Build a separate VLAN for the application",
 "C. Create firewall rules that match the application traffic flow",
 "D. Enable firewall threat blocking"
 ],
 "correct_answer": "C",
-"explanation": "Firewall rules must be built to match the traffic flows, and only then will traffic pass through the firewall. The incorrect answers: A. Create a single firewall rule with an explicit deny By default, most firewalls have an implicit deny as the last policy in the firewall rules. If traffic does not match any other firewall rule, then the implicit deny drops the traffic. Manually configuring an explicit deny doesn't provide any additional traffic control because of the already- existing implicit deny, and it doesn't allow any traffic to pass through the firewall because the rule itself denies all traffic. B. Build a separate VLAN for the application VLAN (Virtual Local Area Network) separation can be used to manage traffic flows or provide additional security options, but creating a VLAN wont bypass an existing firewall deny rule. D. Enable firewall threat blocking Many next-generation firewalls can identify and block malicious network traffic in real-time. However, enabling this feature would not resolve any existing communication issues between the user network and the data center network. [=",
+"explanation": "Firewall rules must be built to match the traffic flows, and only then will traffic pass through the firewall. The incorrect answers: A. Create a single firewall rule with an explicit deny By default, most firewalls have an implicit deny as the last policy in the firewall rules. If traffic does not match any other firewall rule, then the implicit deny drops the traffic. Manually configuring an explicit deny doesn't provide any additional traffic control because of the already- existing implicit deny, and it doesn't allow any traffic to pass through the firewall because the rule itself denies all traffic. B. Build a separate VLAN for the application VLAN (Virtual Local Area Network) separation can be used to manage traffic flows or provide additional security options, but creating a VLAN won't bypass an existing firewall deny rule. D. Enable firewall threat blocking Many next-generation firewalls can identify and block malicious network traffic in real-time. However, enabling this feature would not resolve any existing communication issues between the user network and the data center network.",
 "tags": [
 "firewalls"
 ]
@@ -3963,7 +3963,7 @@
 "D. Obtain a signed copy of the Acceptable Use Policies"
 ],
 "correct_answer": "B",
-"explanation": "Given the other possible answers, this one is the only one that would result in unrecoverable data loss if not properly followed. The incorrect answers: A. Perform an on-demand audit of the user's privileges The user's account will be disabled once they leave the organization, so an audit of their privileges would not be very useful. C. Document the user's outstanding tasks Creating documentation is important, but it's not as important as retaining the user's data with the decryption keys. D. Obtain a signed copy of the Acceptable Use Policies Acceptable Use Policies (AUPs) are usually signed during the on-boarding process. You won't need an AUP if the user is no longer accessing the network. faz=--",
+"explanation": "Given the other possible answers, this one is the only one that would result in unrecoverable data loss if not properly followed. The incorrect answers: A. Perform an on-demand audit of the user's privileges The user's account will be disabled once they leave the organization, so an audit of their privileges would not be very useful. C. Document the user's outstanding tasks Creating documentation is important, but it's not as important as retaining the user's data with the decryption keys. D. Obtain a signed copy of the Acceptable Use Policies Acceptable Use Policies (AUPs) are usually signed during the on-boarding process. You won't need an AUP if the user is no longer accessing the network.",
 "tags": [
 "security_procedures"
 ]
@@ -3982,7 +3982,7 @@
 "D. Data hashing"
 ],
 "correct_answer": "D",
-"explanation": "If the data is tampered with, a hash taken after the change will differ from the original value. This allows the forensic engineer to identify if information has been changed. . The incorrect answers: A. E-discovery E-Discovery (Electronic Discovery) describes the collection, preparation, review, interpretation, and production of electronic documents. Collecting information through e-discovery does not guarantee the integrity of the data. B. Root cause analysis A root cause analysis examines the evidence and determines the reason for the breach or attack. Performing a root cause analysis can help prevent future attacks, but it would not ensure the integrity of the collected data. C. Legal hold A legal hold is a legal technique to preserve relevant information. This legal hold will ensure the data remains accessible for any legal preparation that needs to occur prior to litigation. feo",
+"explanation": "If the data is tampered with, a hash taken after the change will differ from the original value. This allows the forensic engineer to identify if information has been changed. . The incorrect answers: A. E-discovery E-Discovery (Electronic Discovery) describes the collection, preparation, review, interpretation, and production of electronic documents. Collecting information through e-discovery does not guarantee the integrity of the data. B. Root cause analysis A root cause analysis examines the evidence and determines the reason for the breach or attack. Performing a root cause analysis can help prevent future attacks, but it would not ensure the integrity of the collected data. C. Legal hold A legal hold is a legal technique to preserve relevant information. This legal hold will ensure the data remains accessible for any legal preparation that needs to occur prior to litigation.",
 "tags": [
 "digital_forensics"
 ]
@@ -3993,7 +3993,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.4",
 "type": "multiple_choice",
-"question": "A security administrator is reviewing authentication | The logs show a large number of accounts with at leas three failed authentication attempts during the previous week. Which of the following would BEST explain tl report data?",
+"question": "A security administrator is reviewing authentication logs. The logs show a large number of accounts with at least three failed authentication attempts during the previous week. Which of the following would BEST explain the report data?",
 "options": [
 "A. Downgrade attack",
 "B. Phishing",
@@ -4015,7 +4015,7 @@
 "question": "A security administrator has been asked to block all browsing to casino gaming websites. Which of the following would be the BEST way to implement this requirement?",
 "options": [
 "A. Tune the IPS signatures",
-"B. Block port tep/443 on the firewall",
+"B. Block port tcp/443 on the firewall",
 "C. Configure 802.1X for web browsing",
 "D. Add a content filter rule"
 ],
@@ -4191,7 +4191,7 @@
 "D. Wildcards"
 ],
 "correct_answer": "A",
-"explanation": "The OCSP status is commonly \"stapled\" into the SSL/TLS handshake process. Instead of contacting the certificate authority to verify the certificate, the verification is included with the initial network connection to the server. The incorrect answers: B. Self-signed certificates Self-signed certificates could be created for internal company use, but this would not change the process for validating the status of a certificate. C. CRL A CRL (Certificate Revocation List) is a list of revoked certificates maintained by the certificate authority. To view the CRL, an end-user client would directly access the CA. D. Wildcards Wildcards are added to certificates for use across multiple devices. Wildcards would not decrease the number of certificate status checks for a particular service. fst",
+"explanation": "The OCSP status is commonly \"stapled\" into the SSL/TLS handshake process. Instead of contacting the certificate authority to verify the certificate, the verification is included with the initial network connection to the server. The incorrect answers: B. Self-signed certificates Self-signed certificates could be created for internal company use, but this would not change the process for validating the status of a certificate. C. CRL A CRL (Certificate Revocation List) is a list of revoked certificates maintained by the certificate authority. To view the CRL, an end-user client would directly access the CA. D. Wildcards Wildcards are added to certificates for use across multiple devices. Wildcards would not decrease the number of certificate status checks for a particular service.",
 "tags": [
 "certificates"
 ]
@@ -4210,7 +4210,7 @@
 "D. Detective"
 ],
 "correct_answer": "B",
-"explanation": "A streamlined backup and restore process compensates for the limited security features of the EDR (Endpoint Detection and Response) software. The incorrect answers: A. Directive Directive controls define policies and processes, but directive controls won't provide a method for recovering from a ransomware infection. C. Preventive A preventive control will block access. The EDR software on a workstation is an example of a preventive control. D. Detective A detective control may not be able to block an attack, but it can identify and alert if an attack is underway. eae §=SY(-701, Objective 1.1 - Security Controls https://professormesser.link/701010101",
+"explanation": "A streamlined backup and restore process compensates for the limited security features of the EDR (Endpoint Detection and Response) software. The incorrect answers: A. Directive Directive controls define policies and processes, but directive controls won't provide a method for recovering from a ransomware infection. C. Preventive A preventive control will block access. The EDR software on a workstation is an example of a preventive control. D. Detective A detective control may not be able to block an attack, but it can identify and alert if an attack is underway. SY0-701, Objective 1.1 - Security Controls — https://professormesser.link/701010101",
 "tags": null
 },
 {
@@ -4369,16 +4369,16 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.9",
 "type": "multiple_choice",
-"question": "A technician is reviewing this information from an IPS | MAIN IPS: 22June2023 09:02:50 reject 10.1.111.7 Alert: HTTP Suspicious Webdav OPTIONS Method Requires Severity: medium; Performance Impact:3; Category: info-leak; Packet capture; disable Proto:tcp; dst:192.168.11.1; sre:10.1.111.7 Which of the following can be associated with this lo information? (Select TWO)",
+"question": "A technician is reviewing this information from an IPS: MAIN IPS: 22June2023 09:02:50 reject 10.1.111.7 Alert: HTTP Suspicious Webdav OPTIONS Method Requires Severity: medium; Performance Impact:3; Category: info-leak; Packet capture; disable Proto:tcp; dst:192.168.11.1; src:10.1.111.7 Which of the following can be associated with this log information? (Select TWO)",
 "options": [
 "A. The attacker sent a non-authenticated BGP packet to trigger the IPS",
 "B. The source of the attack is 192.168.11.1",
-"C. The event was logged but no packets were drop",
+"C. The event was logged but no packets were dropped",
 "D. The source of the attack is 10.1.111.7",
 "E. The attacker sent an unusual HTTP packet to trigger the IPS"
 ],
 "correct_answer": "D,E",
-"explanation": "1.111.7 and E. The attacker sent an unusual HTTP packet to trigger the IPS The second line of the IPS log shows the type of alert, and this record indicates a suspicious HTTP packet was sent. The last line of the IPS log shows the protocol, destination, and source IP address information. The source IP address is 10.1.111.7. The incorrect answers: A. The attacker sent a non-authenticated BGP packet to trigger the IPS The alert for this IPS log does not indicate any non-authenticated packets or BGP packets. B. The source of the attack is 192.168.11.1 The last line of the log identifies the protocol and IP addresses. The \"src\" address is the source of the packet and is identified as 10.1.111.7. C. The event was logged but no packets were dropped The first line of the log shows the name of the IPS which identified the issue, the date and time, and disposition. In this log entry, the packet was rejected from IP address 10.1.111.7. [:5\"5[",
+"explanation": "1.111.7 and E. The attacker sent an unusual HTTP packet to trigger the IPS The second line of the IPS log shows the type of alert, and this record indicates a suspicious HTTP packet was sent. The last line of the IPS log shows the protocol, destination, and source IP address information. The source IP address is 10.1.111.7. The incorrect answers: A. The attacker sent a non-authenticated BGP packet to trigger the IPS The alert for this IPS log does not indicate any non-authenticated packets or BGP packets. B. The source of the attack is 192.168.11.1 The last line of the log identifies the protocol and IP addresses. The \"src\" address is the source of the packet and is identified as 10.1.111.7. C. The event was logged but no packets were dropped The first line of the log shows the name of the IPS which identified the issue, the date and time, and disposition. In this log entry, the packet was rejected from IP address 10.1.111.7.",
 "tags": [
 "log_data"
 ]
@@ -4427,7 +4427,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.4",
 "type": "multiple_choice",
-"question": "An attacker has gained access to an application through the use of packet captures. Which of the following wou be MOST likely used by the attacker?",
+"question": "An attacker has gained access to an application through the use of packet captures. Which of the following would be MOST likely used by the attacker?",
 "options": [
 "A. Overflow",
 "B. Forgery",
@@ -4435,7 +4435,7 @@
 "D. Injection"
 ],
 "correct_answer": "C",
-"explanation": "This information is commonly captured in network packets and replayed to the service. The incorrect answers: A. Overflow A buffer overflow attack attempts to store a large number into a smaller sized memory space. [his can sometimes improperly change the value of memory areas that are outside of the smaller space. B. Forgery A cross-site request forgery commonly uses malicious links to take advantage of the trust a site might have for a user's browser. Packet captures are not necessary to perform a forgery attack. D. Injection The unwanted injection of data into a database, library, or any other data flow is an injection attack. The information contained in a packet capture is not commonly used during an injection attack. (a) 3\"--[a",
+"explanation": "This information is commonly captured in network packets and replayed to the service. The incorrect answers: A. Overflow A buffer overflow attack attempts to store a large number into a smaller sized memory space. This can sometimes improperly change the value of memory areas that are outside of the smaller space. B. Forgery A cross-site request forgery commonly uses malicious links to take advantage of the trust a site might have for a user's browser. Packet captures are not necessary to perform a forgery attack. D. Injection The unwanted injection of data into a database, library, or any other data flow is an injection attack. The information contained in a packet capture is not commonly used during an injection attack.",
 "tags": [
 "replay_attacks"
 ]
@@ -4446,7 +4446,7 @@
 "domain": "2.0 Threats, Vulnerabilities, and Mitigations",
 "subtopic": "2.4",
 "type": "multiple_choice",
-"question": "A company is receiving complaints of slowness and disconnections to their Internet-facing web server. A network administrator monitors the Internet link and finds excessive bandwidth utilization from thousands of different IP addresses. Which of the following would bs the MOST likely reason for these performance issues?",
+"question": "A company is receiving complaints of slowness and disconnections to their Internet-facing web server. A network administrator monitors the Internet link and finds excessive bandwidth utilization from thousands of different IP addresses. Which of the following would be the MOST likely reason for these performance issues?",
 "options": [
 "A. DDoS",
 "B. DNS spoofing",
@@ -4454,7 +4454,7 @@
 "D. Wireless jamming"
 ],
 "correct_answer": "A",
-"explanation": "In this example, the DDoS is related to a bandwidth utilization exhaustion caused by excessive server requests. The incorrect answers: B. DNS spoofing DNS (Domain Name System) spoofing modifies DNS information on a DNS server or a client to direct users to an unauthorized site. DNS spoofing would not be the cause for these performance issues. C. RFID cloning RFID (Radio Frequency Identification) cloning is used to duplicate an existing RFID device. These devices are not commonly associated with network communication to a public web server. D. Wireless jamming Wireless jamming disrupts wireless networks and prevents any type of communication. The communication issues to a public web server would not be associated with wireless networking. f)xs[8",
+"explanation": "In this example, the DDoS is related to a bandwidth utilization exhaustion caused by excessive server requests. The incorrect answers: B. DNS spoofing DNS (Domain Name System) spoofing modifies DNS information on a DNS server or a client to direct users to an unauthorized site. DNS spoofing would not be the cause for these performance issues. C. RFID cloning RFID (Radio Frequency Identification) cloning is used to duplicate an existing RFID device. These devices are not commonly associated with network communication to a public web server. D. Wireless jamming Wireless jamming disrupts wireless networks and prevents any type of communication. The communication issues to a public web server would not be associated with wireless networking.",
 "tags": [
 "denial_of_service"
 ]
@@ -4522,7 +4522,7 @@
 "domain": "4.0 Security Operations",
 "subtopic": "4.8",
 "type": "multiple_choice",
-"question": "Which of these are used to force the preservation of dat for later use in court?",
+"question": "Which of these are used to force the preservation of data for later use in court?",
 "options": [
 "A. Chain of custody",
 "B. Data loss prevention",
@@ -4530,7 +4530,7 @@
 "D. E-discovery"
 ],
 "correct_answer": "C",
-"explanation": "This process will ensure the data remains accessible for any legal preparation prior to litigation. The incorrect answers: A. Chain of custody Chain of custody ensures the integrity of evidence is maintained. The contents of the evidence are documented, and each person who contacts the evidence is required to document their activity. B. Data loss prevention Data loss prevention (DLP) is a technique for identifying sensitive information transmitted across the network, such as Social Security numbers, credit card numbers, and other PII (Personally Identifiable Information). DLP is not a legal technique. D. E-discovery E-discovery describes the process of identifying and collecting electronic documents and media. The e-discovery process itself does not force the preservation of data. fo] =",
+"explanation": "This process will ensure the data remains accessible for any legal preparation prior to litigation. The incorrect answers: A. Chain of custody Chain of custody ensures the integrity of evidence is maintained. The contents of the evidence are documented, and each person who contacts the evidence is required to document their activity. B. Data loss prevention Data loss prevention (DLP) is a technique for identifying sensitive information transmitted across the network, such as Social Security numbers, credit card numbers, and other PII (Personally Identifiable Information). DLP is not a legal technique. D. E-discovery E-discovery describes the process of identifying and collecting electronic documents and media. The e-discovery process itself does not force the preservation of data.",
 "tags": [
 "digital_forensics"
 ]
@@ -4566,7 +4566,7 @@
 "D. Permission restrictions"
 ],
 "correct_answer": "B",
-"explanation": "In this example, the company is planning for an increased interest in their products and are increasing the overall capacity of their web server resources. The incorrect answers: A. Platform diversity Platform diversity describes the use of different platforms to provide a similar service. For example, a company may decide to use both Linux and Windows platforms for their web services. In this question, the platform used by the web services is not mentioned. C. Multi-cloud systems Multi-cloud systems will use more than a single cloud provider to provide a service. In this question, there were no specific references to cloud providers. D. Permission restrictions Permission restrictions would limit access to data or resources, and the addition of multiple identical servers would not indicate a change to the existing permissions. gua",
+"explanation": "In this example, the company is planning for an increased interest in their products and are increasing the overall capacity of their web server resources. The incorrect answers: A. Platform diversity Platform diversity describes the use of different platforms to provide a similar service. For example, a company may decide to use both Linux and Windows platforms for their web services. In this question, the platform used by the web services is not mentioned. C. Multi-cloud systems Multi-cloud systems will use more than a single cloud provider to provide a service. In this question, there were no specific references to cloud providers. D. Permission restrictions Permission restrictions would limit access to data or resources, and the addition of multiple identical servers would not indicate a change to the existing permissions.",
 "tags": null
 },
 {

@@ -215,7 +215,7 @@ const TestMode = (() => {
         </div>
         <div class="btn-row">
           <button class="btn" id="new-test-btn">New Test</button>
-          ${weakIds.length ? `<button class="btn btn-red" id="study-btn">Study Missed</button>` : ""}
+          ${weakIds.length ? `<button class="btn btn-red" id="study-btn">Study in Learn Mode</button>` : ""}
           <button class="btn btn-ghost" id="dash-btn">Dashboard</button>
         </div>
       </div>
@@ -224,8 +224,9 @@ const TestMode = (() => {
     rootContainer.querySelector("#dash-btn").addEventListener("click", () => { state = freshState(); Router.show("dashboard"); });
     const studyBtn = rootContainer.querySelector("#study-btn");
     if (studyBtn) studyBtn.addEventListener("click", () => {
+      // Learn mode no longer takes a preset pool -- missed questions surface
+      // naturally through the active Master Mode period's own pass tracking.
       state = freshState();
-      Router.setLearnStartMode("weak");
       Router.show("learn");
     });
   }
